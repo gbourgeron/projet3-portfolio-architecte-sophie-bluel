@@ -65,5 +65,10 @@ hotFilterButton.addEventListener("click", function() {
     genererWorks(hotFiltres);
 })
 
-
+// Filtre Tous
 const allFilterButton = document.getElementById("all-button");
+allFilterButton.addEventListener("click", function() {
+    // Suppression de tous les éléments (filtrés ou non) puis régénération à nouveau de tous les éléments
+    document.querySelector(".gallery").innerHTML = "";
+    genererWorks(works);
+})
