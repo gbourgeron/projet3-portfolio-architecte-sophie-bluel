@@ -40,27 +40,21 @@ for (let i = 0; i < works.length; i++) {
 // Filtre Objets
 const objFilterButton = document.getElementById("objets");
 objFilterButton.addEventListener("click", function() {
-    const objFiltres = works.filter(function (work) {
-        return work.category.id === 1;
-    });
+    const objFiltres = works.filter(work => work.category.id === 1);
     console.log(objFiltres);
 })
 
 // Filtre Appartements
 const appartFilterButton = document.getElementById("appartements");
 appartFilterButton.addEventListener("click", function() {
-    const appartFiltres = works.filter(function (work) {
-        return work.category.id === 2;
-    })
+    const appartFiltres = works.filter(work => work.category.id === 2);
     console.log(appartFiltres);
 })
 
 // Filtre Hotels & Restaurants
 const hotFilterButton = document.getElementById("hotels-restaurants");
 hotFilterButton.addEventListener("click", function() {
-    const hotFiltres = works.filter(function (work) {
-        return work.category.id === 3;
-    })
+    const hotFiltres = works.filter(work => work.category.id === 3);
     console.log(hotFiltres);
 })
 
