@@ -47,6 +47,7 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -98,6 +99,10 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+/********************************/
+/*     Introduction section     */
+/********************************/
 #introduction {
 	display: flex;
 	align-items: center;
@@ -121,6 +126,10 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+/*****************************/
+/*     Portfolio section     */
+/*****************************/
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -137,6 +146,10 @@ li:hover {
 	width: 100%;
 
 }
+
+/***************************/
+/*     Contact section     */
+/***************************/
 #contact {
 	width: 50%;
 margin: auto;
@@ -180,6 +193,9 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+/******************/
+/*     Footer     */
+/******************/
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
