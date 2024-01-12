@@ -3,12 +3,12 @@ const reponse = await fetch("http://localhost:5678/api/works");
 const works = await reponse.json(); // Nouveau tableau
 
 
-// Creation d'une boucle pour parcourir et afficher tous les éléments de works
+// Creation d'une boucle pour parcourir et afficher tous les objets de works
 for (let i = 0; i < works.length; i++) {
         
-    const work = works[i]; // Work correspondant à un élément de ma liste works (un projet)
+    const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
 
-    // Création des balises pour index.html
+    // Création d'un élément 'image' et 'figCaption'
     const imageElement = document.createElement("img");
     imageElement.src = work.imageUrl;
     imageElement.alt = work.title;
@@ -16,12 +16,12 @@ for (let i = 0; i < works.length; i++) {
     const figCaptionElement = document.createElement("figcaption");
     figCaptionElement.innerText = work.title;
 
-    // Création de l'élément figure et rattachement d'img et figcaption
+    // Création de l'élément 'figure' et rattachement des éléments 'image' et 'figcaption'
     const figureElement = document.createElement("figure");
     figureElement.appendChild(imageElement);
     figureElement.appendChild(figCaptionElement);
 
-    // Rattachement de la balise figure au DOM
+    // Rattachement de l'élément 'figure' au DOM
     const divGallery = document.querySelector(".gallery");
     divGallery.appendChild(figureElement);
 
