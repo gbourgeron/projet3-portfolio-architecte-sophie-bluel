@@ -26,3 +26,43 @@ for (let i = 0; i < works.length; i++) {
     divGallery.appendChild(figureElement);
 
 }
+
+
+// Boutons de filtrage par catégories
+// function filterButton(category) {
+//     const projetsFiltrees = works.filter(function (work) {
+//         return 
+//     }) 
+// }
+
+
+
+// Filtre Objets
+const objFilterButton = document.getElementById("objets");
+objFilterButton.addEventListener("click", function() {
+    const objFiltres = works.filter(function (work) {
+        return work.category.id === 1;
+    });
+    console.log(objFiltres);
+})
+
+// Filtre Appartements
+const appartFilterButton = document.getElementById("appartements");
+appartFilterButton.addEventListener("click", function() {
+    const appartFiltres = works.filter(function (work) {
+        return work.category.id === 2;
+    })
+    console.log(appartFiltres);
+})
+
+// Filtre Hotels & Restaurants
+const hotFilterButton = document.getElementById("hotels-restaurants");
+hotFilterButton.addEventListener("click", function() {
+    const hotFiltres = works.filter(function (work) {
+        return work.category.id === 3;
+    })
+    console.log(hotFiltres);
+})
+
+
+const allFilterButton = document.getElementById("all-button");
