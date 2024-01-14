@@ -34,6 +34,7 @@ function genererWorks(works) {
 // Premier affichage de la page
 genererWorks(works);
 
+
 // Boutons de filtrages 
 // Filtre Objets
 const objFilterButton = document.getElementById("objets");
