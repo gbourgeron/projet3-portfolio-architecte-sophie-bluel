@@ -79,25 +79,27 @@ const token = sessionStorage.getItem("token");
 
 // Modification des éléments de la page index.html si présence du token
 if(token) {
-    // Lien log-link
     // Modification du lien 'log-link'
     const logLink = document.getElementById("log-link");
-    logLink.innerText = "logout";
+    logLink.innerText = "logout";    
 
+    // Affichage de la barre "Mode édition"
+    const modeEdition = document.getElementById("creation-mode");
+    modeEdition.classList.remove("hidden");
+    
+    // Affichage d'un lien pour modifier les projets
+    const modifProjects = document.getElementById("modif-projects");
+    modifProjects.classList.remove("hidden");
+    
+    // Masquage des filtres
+    const filterBar = document.getElementById("filter-bar");
+    filterBar.classList.add("hidden");
+        
+    
     // Déconnexion en cas de click sur log-link
     logLink.addEventListener("click", (event) => {
         event.preventDefault(); // Empêche le rechargement de la plage
         sessionStorage.removeItem("token"); // Retire le token
         location.reload(); // Recharge la page une fois le token retiré
     })
-
-
-    // Section projets
-    // Ajout d'un lien pour modifier les projets
-    const modifProjects = document.getElementById("modif-projects");
-    modifProjects.classList.remove("hidden");
-
-    // Masquage des filtres
-    const filterBar = document.getElementById("filter-bar");
-    filterBar.classList.add("hidden");
 }

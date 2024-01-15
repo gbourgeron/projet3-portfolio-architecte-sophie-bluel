@@ -283,8 +283,9 @@ footer nav ul {
 	cursor: pointer;
 }
 
+/* Pour les balises à masquer */
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .icon {
@@ -305,4 +306,22 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	position: relative;
+}
+
+/* Mode edition */
+#creation-mode {
+	display: flex;
+	justify-content: center;
+	height: 59px;
+	color: #FFFEF8;
+	background-color: black;
+}
+
+#creation-mode img {
+	margin-right: 10px;
+}
+
+#creation-mode span {
+	display: flex;
+	align-items: center;
 }
