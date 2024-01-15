@@ -25,12 +25,23 @@ function userLogin() {
                 throw new Error(`Erreur HTTP! Statut: ${response.status}`);
             }
             
+            // Extraction du token de la réponse
+            return response.json();
+        })
+        
+        .then(data => {
+            // Stockage du token localement
+            const token = data.token;
+            sessionStorage.setItem('token', token);            
+            
+            
             // Afficher un message de confirmation
             alert('Connexion réussie ! Redirection vers index.html.');
-
+            
             // Redirection sur index.html après un login réussi
             window.location.href = "index.html";
         })
+
 
         .catch(error => {
             console.error('Erreur lors de la requête fetch:', error);
