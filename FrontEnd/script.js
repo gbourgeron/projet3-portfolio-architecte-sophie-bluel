@@ -94,6 +94,6 @@ if(token) {
 
     // Section projets
     // Masquage des filtres
-    const filterBar = document.getElementByClass("filter-bar");
+    const filterBar = document.getElementById("filter-bar");
     filterBar.classList.add("hidden");
 }
