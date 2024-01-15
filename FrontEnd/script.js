@@ -93,6 +93,10 @@ if(token) {
 
 
     // Section projets
+    // Ajout d'un lien pour modifier les projets
+    const modifProjects = document.getElementById("modif-projects");
+    modifProjects.classList.remove("hidden");
+
     // Masquage des filtres
     const filterBar = document.getElementById("filter-bar");
     filterBar.classList.add("hidden");

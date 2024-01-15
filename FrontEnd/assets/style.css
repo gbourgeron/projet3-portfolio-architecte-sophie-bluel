@@ -286,3 +286,7 @@ footer nav ul {
 .hidden {
 	display: none;
 }
+
+.icon {
+	height: 18px;
+}
