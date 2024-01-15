@@ -88,7 +88,7 @@ if(token) {
     logLink.addEventListener("click", (event) => {
         event.preventDefault(); // Empêche le rechargement de la plage
         sessionStorage.removeItem("token"); // Retire le token
-        logLink.innerText = "login"; // Change le texte du lien
+        location.reload(); // Recharge la page une fois le token retiré
     })
 
 
