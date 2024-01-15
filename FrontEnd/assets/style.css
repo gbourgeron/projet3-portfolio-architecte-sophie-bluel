@@ -290,3 +290,19 @@ footer nav ul {
 .icon {
 	height: 18px;
 }
+
+#modif-projects {
+	position: absolute;
+	left: calc(50% + 120px);
+	top: 5px;
+}
+
+#modif-projects:hover {
+	cursor: pointer;
+}
+
+.headline {
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
