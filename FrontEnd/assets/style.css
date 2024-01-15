@@ -269,7 +269,7 @@ footer nav ul {
 
 #login input {
 	height: 51px;
-	padding: 0;
+	padding: 0 10px;
 	margin-bottom: 30px;
 	border: 0;
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
@@ -277,4 +277,8 @@ footer nav ul {
 
 #login input[type="submit"] {
 	height: 36px;
+}
+
+#login input[type="submit"]:hover {
+	cursor: pointer;
 }
