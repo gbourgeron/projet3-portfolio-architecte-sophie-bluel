@@ -72,3 +72,28 @@ allFilterButton.addEventListener("click", function() {
     document.querySelector(".gallery").innerHTML = "";
     genererWorks(works);
 })
+
+
+// Récupération du token d'authentification
+const token = sessionStorage.getItem("token");
+
+// Modification des éléments de la page index.html si présence du token
+if(token) {
+    // Lien log-link
+    // Modification du lien 'log-link'
+    const logLink = document.getElementById("log-link");
+    logLink.innerText = "logout";
+
+    // Déconnexion en cas de click sur log-link
+    logLink.addEventListener("click", (event) => {
+        event.preventDefault(); // Empêche le rechargement de la plage
+        sessionStorage.removeItem("token"); // Retire le token
+        logLink.innerText = "login"; // Change le texte du lien
+    })
+
+
+    // Section projets
+    // Masquage des filtres
+    const filterBar = document.getElementByClass("filter-bar");
+    filterBar.classList.add("hidden");
+}
