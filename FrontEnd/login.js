@@ -1,7 +1,7 @@
 // Fonction pour se loguer 
-export function userLogin() {
+function userLogin() {
     const loginForm = document.getElementById("login-form");
-    loginForm.addEventListener("click", function(event) {
+    loginForm.addEventListener("submit", function(event) {
         event.preventDefault(); // Évite le rechargement de la page
 
         // Création de l'objet de l'user
@@ -13,20 +13,30 @@ export function userLogin() {
         // Création de la charge utile au format JSON
         const chargeUtile = JSON.stringify(user);
 
-        // Appel de la fonction fetch avec tous les informations
+        // Appel de la fonction fetch avec toutes les informations
         fetch("http://localhost:5678/api/users/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: chargeUtile
+        })
+
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+            }
+            
+            // Afficher un message de confirmation
+            alert('Connexion réussie ! Redirection vers index.html.');
+
+            // Redirection sur index.html après un login réussi
+            window.location.href = "index.html";
+        })
+
+        .catch(error => {
+            console.error('Erreur lors de la requête fetch:', error);
         });
-
-        // console.log(user);
-
-        // window.location.href = "index.html"; // Redirection sur index.html
     });
 
 }
 
-
-// Appel de la fonction pour ajouter le listener au formulaire
 userLogin();

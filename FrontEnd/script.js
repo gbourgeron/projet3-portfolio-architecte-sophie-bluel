@@ -2,7 +2,6 @@
 const reponse = await fetch("http://localhost:5678/api/works");
 const works = await reponse.json(); // Nouveau tableau
 
-
 // Fonction qui génère toute la 'gallery'
 function genererWorks(works) {
     
