@@ -1,5 +1,6 @@
 // Fonction pour se loguer 
 function userLogin() {
+    
     const loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault(); // Évite le rechargement de la page
@@ -34,14 +35,9 @@ function userLogin() {
             const token = data.token;
             sessionStorage.setItem('token', token);            
             
-            
-            // Afficher un message de confirmation
-            alert('Connexion réussie ! Redirection vers index.html.');
-            
             // Redirection sur index.html après un login réussi
             window.location.href = "index.html";
         })
-
 
         .catch(error => {
             console.error('Erreur lors de la requête fetch:', error);
