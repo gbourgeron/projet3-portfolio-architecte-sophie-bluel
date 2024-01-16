@@ -1,6 +1,8 @@
 // Fonction pour se loguer 
 function userLogin() {
-    
+
+    const errorMessage = document.getElementById("error-message");
+
     const loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault(); // Évite le rechargement de la page
@@ -41,6 +43,15 @@ function userLogin() {
 
         .catch(error => {
             console.error('Erreur lors de la requête fetch:', error);
+            errorMessage.classList.remove("hidden");
+
+            if (error instanceof TypeError) {
+                // Message si connexion au serveur impossible
+                errorMessage.textContent = "Erreur de connexion au serveur, veuillez essayer ultérieurement."
+            } else {
+                // Message si identifiants incorrects
+                errorMessage.textContent = "Votre combinaison email/mot de passe est incorrecte."
+            }
         });
     });
 
