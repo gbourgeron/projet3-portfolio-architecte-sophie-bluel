@@ -346,7 +346,7 @@ footer nav ul {
 /* Boite modale */
 .modal {
 	position: fixed;
-	display: none; /* Change to 'flex' when 'modifier' is clicked */
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	top: 0;
