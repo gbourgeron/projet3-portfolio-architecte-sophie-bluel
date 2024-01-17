@@ -100,7 +100,7 @@ li:hover {
 	color: #B1663C;
 }
 
-nav a {
+a {
 	text-decoration: none;
 }
 
@@ -296,14 +296,12 @@ footer nav ul {
 	height: 18px;
 }
 
+/* Modale */
 #modif-projects {
 	position: absolute;
 	left: calc(50% + 120px);
 	top: 5px;
-}
-
-#modif-projects:hover {
-	cursor: pointer;
+	color: black;
 }
 
 .headline {
