@@ -365,3 +365,10 @@ footer nav ul {
 	border-radius: 10px;
 	background-color: #FFF;
 }
+
+
+/* Drop zone */
+#drop_zone {
+	height: 169px;
+	background-color: #E8F1F6;
+}

@@ -70,12 +70,21 @@
 				</div>
 			</aside>
 			
-			<aside id="modal-2" class="modal hidden">
+			<aside id="modal-2" class="modal ">
 				<div class="modal-wrapper">
 					<img src="assets/icons/arrowback.png" alt="Bouton retour" id="back">
 					<img src="assets/icons/cross.png" alt="Croix de fermeture" class="cross">
 					<h3>Ajout photo</h3>
 					<form action="">
+						<div id="drop_zone"
+							 ondrop="dropHandler(event);"
+							 ondragover="dragOverHandler(event);">
+							<img src="assets/icons/picture.png" alt="Logo image">
+							<button>+ Ajouter photo</button>
+							<p>jpg, png : 4mo max</p>
+						</div>
+
+
 						<label for="title">Titre</label>
 						<input type="text">
 
