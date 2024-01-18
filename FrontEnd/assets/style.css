@@ -386,6 +386,8 @@ footer nav ul {
 }
 
 .modal-content {
+	display: flex;
+	flex-direction: column;
 	width: 420px;
 	margin: 10px auto;
 }
@@ -412,6 +414,9 @@ footer nav ul {
 }
 
 /* Modal 1 */
+#modal-1 .icons {
+	justify-content: right;
+}
 
 /* Modal 2 */
 #modal-2 .icons {
