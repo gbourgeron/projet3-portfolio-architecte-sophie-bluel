@@ -9,7 +9,7 @@
 	<!-- Google fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 
 	<!-- Stylesheet -->
 	<link rel="stylesheet" href="./assets/style.css">
@@ -56,48 +56,57 @@
 				<img src="assets/icons/edit-icon.png" alt="icone edit" class="icon" ><span>modifier</span>
 			</a>
 
+			<!-- Modale 1 - Gallerie -->
 			<aside id="modal-1" class="modal hidden">
 				<div class="modal-wrapper">
-					<img src="assets/icons/cross.png" alt="Croix de fermeture" class="cross">
-					<h3>Galerie photo</h3>
-					<div class="gallery-modal">
-
+					<div class="icons">
+						<img src="assets/icons/cross.png" alt="Croix de fermeture" class="cross">
 					</div>
-					<hr>
-					<button>
-						Ajouter une photo
-					</button>
+					<div class="modal-content">
+						<h3>Galerie photo</h3>
+						<div class="gallery-modal">
+							
+						</div>
+						<hr>
+						<button>
+							Ajouter une photo
+						</button>
+					</div>
 				</div>
 			</aside>
 			
+			<!-- Modale 2 - Ajout projet -->
 			<aside id="modal-2" class="modal ">
 				<div class="modal-wrapper">
-					<img src="assets/icons/arrowback.png" alt="Bouton retour" id="back">
-					<img src="assets/icons/cross.png" alt="Croix de fermeture" class="cross">
-					<h3>Ajout photo</h3>
-					<form action="">
-						<div id="drop_zone"
-							 ondrop="dropHandler(event);"
-							 ondragover="dragOverHandler(event);">
-							<img src="assets/icons/picture.png" alt="Logo image">
-							<button>+ Ajouter photo</button>
-							<p>jpg, png : 4mo max</p>
-						</div>
+					<div class="icons">
+						<img src="assets/icons/arrowback.png" alt="Bouton retour" id="back">
+						<img src="assets/icons/cross.png" alt="Croix de fermeture" class="cross">
+					</div>
+					<div class="modal-content">
+						<h3>Ajout photo</h3>
+						<form action="">
+							<div id="drop_zone"
+							ondrop="dropHandler(event);"
+							ondragover="dragOverHandler(event);">
+								<img src="assets/icons/picture.png" alt="Logo image" id="picture-dropzone">
+								<button id="add-button-dropzone">+ Ajouter photo</button>
+								<p id="text-dropzone">jpg, png : 4mo max</p>
+							</div>
 
+							<label for="title">Titre</label>
+							<input type="text">
 
-						<label for="title">Titre</label>
-						<input type="text">
-
-						<label for="categorie">Catégorie</label>
-						<select name="categorie" id="categorie">
-							<option value="objet">Objet</option>
-							<option value="appartement">Appartement</option>
-							<option value="hotel-restaurant">Hôtel & Restaurant</option>
-						</select>
-			
-						<hr>
-						<input type="submit" value="Valider">
-					</form>
+							<label for="categorie">Catégorie</label>
+							<select name="categorie" id="categorie">
+								<option value="objet">Objet</option>
+								<option value="appartement">Appartement</option>
+								<option value="hotel-restaurant">Hôtel & Restaurant</option>
+							</select>
+						
+							<hr>
+							<input type="submit" value="Valider">
+						</form>
+					</div>
 				</div>
 			</aside>
 		</div>
