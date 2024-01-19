@@ -114,11 +114,11 @@ if(token) {
 //------------------
 //
 //
-// Modales
+// Modals
 const modal1 = document.getElementById("modal-1");
 const modal2 = document.getElementById("modal-2");
 
-// Modale on click
+// Open modal 1 (click 'Modifier')
 const modalLink = document.getElementById("modif-projects");
 modalLink.addEventListener("click", (event) => {
     event.preventDefault();
@@ -161,12 +161,24 @@ modalLink.addEventListener("click", (event) => {
     genererThumbnails(works);
 })
 
-// Fermeture de la modale
 
-// Clic Ajouter une photo (affichage Modale 2)
+// Open modal 2 (click 'Ajouter une photo')
 const addPhotoButton = document.getElementById("add-photo");
 addPhotoButton.addEventListener("click", () => {
     modal2.classList.remove("hidden");
     modal1.classList.add("hidden");
 })
 
+
+// Close modal
+const closeModal = function(event) {
+    event.preventDefault();
+    const targetModal = event.target.closest(".modal");
+    if(targetModal) {
+        targetModal.classList.add("hidden");
+    }
+};
+  
+document.querySelectorAll(".cross").forEach(crossElement => {
+    crossElement.addEventListener("click", closeModal);
+});
