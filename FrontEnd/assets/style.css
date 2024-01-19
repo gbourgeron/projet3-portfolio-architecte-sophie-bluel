@@ -418,6 +418,26 @@ footer nav ul {
 	justify-content: right;
 }
 
+.gallery-modal {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	column-gap: 9px;
+	row-gap: 29px;
+	margin-top: 40px;
+}
+
+.gallery-modal figure {
+	height: 102px;
+	width: 76px;
+	margin-right: auto;
+}
+
+.gallery-modal img {
+	width: 100%;
+}
+
 /* Modal 2 */
 #modal-2 .icons {
 	justify-content: space-between;
