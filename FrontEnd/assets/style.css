@@ -429,6 +429,7 @@ footer nav ul {
 }
 
 .gallery-modal figure {
+	position: relative;
 	height: 102px;
 	width: 76px;
 	margin-right: auto;
@@ -437,6 +438,30 @@ footer nav ul {
 .gallery-modal img {
 	width: 100%;
 }
+
+/* Trashbin icon */
+.trash {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 6px;
+	right: 6px;
+	height: 17px;
+	width: 17px;
+	border-radius: 2px;
+	background-color: black;
+}
+
+.trash img {
+	height: 11px;
+	width: 9px;
+}
+
+.trash:hover {
+	cursor: pointer;
+}
+
 
 /* Modal 2 */
 #modal-2 .icons {

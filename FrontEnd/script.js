@@ -114,10 +114,10 @@ modalLink.addEventListener("click", (event) => {
     const modal1 = document.getElementById("modal-1");
     modal1.classList.remove("hidden");
 
-    
+    // Fonction qui génère toute la gallerie pour la modale
     function genererThumbnails(works) {
     
-        // Creation d'une boucle pour parcourir et afficher tous les objets de works
+        // Creation d'une boucle pour afficher tous les objets de works
         for (let i = 0; i < works.length; i++) {
             
             const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
@@ -126,10 +126,19 @@ modalLink.addEventListener("click", (event) => {
             const imageElement = document.createElement("img");
             imageElement.src = work.imageUrl;
             imageElement.alt = work.title;
+
+            // Création de la trashbin
+            const divTrash = document.createElement("div");
+            divTrash.className = "trash";
+            const imgTrash = document.createElement("img");
+            imgTrash.src = "assets/icons/trashbin.png";
+            divTrash.appendChild(imgTrash);
             
-            // Création de l'élément 'figure' et rattachement de l'élément 'image'
+            // Création de l'élément 'figure' et rattachement de l'élément 'imageElement' et 'divTrash'
             const figureElement = document.createElement("figure");
             figureElement.appendChild(imageElement);
+            figureElement.appendChild(divTrash);
+
             
             // Rattachement de l'élément 'figure' au DOM
             const divGalleryModal = document.querySelector(".gallery-modal");
