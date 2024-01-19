@@ -2,6 +2,9 @@
 const reponse = await fetch("http://localhost:5678/api/works");
 const works = await reponse.json(); // Nouveau tableau
 
+//------------------
+//
+//
 // Fonction qui génère toute la 'gallery'
 function genererWorks(works) {
     
@@ -33,7 +36,9 @@ function genererWorks(works) {
 // Premier affichage de la page
 genererWorks(works);
 
-
+//------------------
+//
+//
 // Boutons de filtrages 
 // Filtre Objets
 const objFilterButton = document.getElementById("objets");
@@ -73,7 +78,9 @@ allFilterButton.addEventListener("click", function() {
     genererWorks(works);
 })
 
-
+//------------------
+//
+//
 // Récupération du token d'authentification
 const token = sessionStorage.getItem("token");
 
@@ -104,20 +111,24 @@ if(token) {
     })
 }
 
-
+//------------------
+//
+//
+// Modales
+const modal1 = document.getElementById("modal-1");
+const modal2 = document.getElementById("modal-2");
 
 // Modale on click
 const modalLink = document.getElementById("modif-projects");
 modalLink.addEventListener("click", (event) => {
     event.preventDefault();
 
-    const modal1 = document.getElementById("modal-1");
     modal1.classList.remove("hidden");
 
     // Fonction qui génère toute la gallerie pour la modale
     function genererThumbnails(works) {
     
-        // Creation d'une boucle pour afficher tous les objets de works
+        // Creation d'une boucle pour récupérer tous les objets de works
         for (let i = 0; i < works.length; i++) {
             
             const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
@@ -138,7 +149,6 @@ modalLink.addEventListener("click", (event) => {
             const figureElement = document.createElement("figure");
             figureElement.appendChild(imageElement);
             figureElement.appendChild(divTrash);
-
             
             // Rattachement de l'élément 'figure' au DOM
             const divGalleryModal = document.querySelector(".gallery-modal");
@@ -147,5 +157,16 @@ modalLink.addEventListener("click", (event) => {
         }
     }
 
+    // Appel de la fonction pour afficher tous les projets
     genererThumbnails(works);
 })
+
+// Fermeture de la modale
+
+// Clic Ajouter une photo (affichage Modale 2)
+const addPhotoButton = document.getElementById("add-photo");
+addPhotoButton.addEventListener("click", () => {
+    modal2.classList.remove("hidden");
+    modal1.classList.add("hidden");
+})
+
