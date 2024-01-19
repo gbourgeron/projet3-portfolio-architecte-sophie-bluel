@@ -173,12 +173,25 @@ addPhotoButton.addEventListener("click", () => {
 // Close modal
 const closeModal = function(event) {
     event.preventDefault();
+
+    // Efface les miniatures
+    const divGalleryModal = document.querySelector(".gallery-modal");
+    divGalleryModal.innerHTML = "";
+
+    // Rajoute la class 'hidden' à la modal
     const targetModal = event.target.closest(".modal");
     if(targetModal) {
         targetModal.classList.add("hidden");
     }
 };
-  
-document.querySelectorAll(".cross").forEach(crossElement => {
-    crossElement.addEventListener("click", closeModal);
+
+const stopPropagation = function(event) {
+    event.stopPropagation();
+}
+
+document.querySelectorAll(".cross, .modal-stop").forEach(element => {
+    element.addEventListener("click", (event) => {
+        closeModal(event);
+        stopPropagation(event);
+    });
 });
