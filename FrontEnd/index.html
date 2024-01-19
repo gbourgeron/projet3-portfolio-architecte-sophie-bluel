@@ -52,15 +52,14 @@
 	<section id="portfolio">
 		<div class="headline">
 			<h2>Mes Projets</h2>
-			<a href="#modal1" class="js-modal hidden" id="modif-projects">
+			<a href="#modal1" class="btn-open hidden" id="modif-projects">
 				<img src="assets/icons/edit-icon.png" alt="icone edit" class="icon" ><span>modifier</span>
 			</a>
 
-			<!-- Modale 1 - Gallerie -->
+			<!-- Modal 1 -->
 			<aside id="modal-1" class="modal hidden">
-				<div class="modal-wrapper modal-stop">
 					<div class="icons">
-							<img class="cross" src="assets/icons/cross.png" alt="Croix de fermeture" >
+							<img class="btn-close cross" src="assets/icons/cross.png" alt="Croix de fermeture" >
 					</div>
 					<div class="modal-content">
 						<h3>Galerie photo</h3>
@@ -68,17 +67,15 @@
 							
 						</div>
 						<hr>
-						<input type="submit" id="add-photo" value="Ajouter une photo">
+						<input type="submit" id="open-modal-2" value="Ajouter une photo">
 					</div>
-				</div>
 			</aside>
 			
 			<!-- Modale 2 - Ajout projet -->
-			<aside id="modal-2" class="modal hidden modal-stop">
-				<div class="modal-wrapper modal-stop">
+			<aside id="modal-2" class="modal hidden">
 					<div class="icons">
 						<img src="assets/icons/arrowback.png" alt="Bouton retour" id="back">
-						<img class="cross" src="assets/icons/cross.png" alt="Croix de fermeture" >
+						<img class="btn-close cross" src="assets/icons/cross.png" alt="Croix de fermeture" >
 					</div>
 					<div class="modal-content">
 						<h3>Ajout photo</h3>
@@ -105,8 +102,8 @@
 							<input type="submit" value="Valider">
 						</form>
 					</div>
-				</div>
 			</aside>
+			<div class="overlay hidden"></div>
 		</div>
 		<div class="filter-bar" id="filter-bar">
 			<button class="filter-button" id="all-button">Tous</button>

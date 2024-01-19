@@ -115,15 +115,14 @@ if(token) {
 //
 //
 // Modals
-const modal1 = document.getElementById("modal-1");
-const modal2 = document.getElementById("modal-2");
+const modal = document.querySelectorAll(".modal");
+const openModalBtn = document.querySelectorAll(".btn-open");
+const closeModalBtn = document.querySelectorAll(".btn-close");
+const overlay = document.querySelector(".overlay");
 
-// Open modal 1 (click 'Modifier')
-const modalLink = document.getElementById("modif-projects");
-modalLink.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    modal1.classList.remove("hidden");
+const openModal = function() {
+    modal[0].classList.remove("hidden");
+    overlay.classList.remove("hidden");
 
     // Fonction qui génère toute la gallerie pour la modale
     function genererThumbnails(works) {
@@ -132,7 +131,7 @@ modalLink.addEventListener("click", (event) => {
         for (let i = 0; i < works.length; i++) {
             
             const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
-    
+
             // Création d'un élément 'image'
             const imageElement = document.createElement("img");
             imageElement.src = work.imageUrl;
@@ -153,45 +152,37 @@ modalLink.addEventListener("click", (event) => {
             // Rattachement de l'élément 'figure' au DOM
             const divGalleryModal = document.querySelector(".gallery-modal");
             divGalleryModal.appendChild(figureElement);
-    
+
         }
+
     }
 
     // Appel de la fonction pour afficher tous les projets
     genererThumbnails(works);
-})
 
+    // Open modal 2 (click 'Ajouter une photo')
+    const openModal2 = document.querySelector("#open-modal-2");
+    openModal2.addEventListener("click", () => {
+        modal[1].classList.remove("hidden");
+        modal[0].classList.add("hidden");
+    })
 
-// Open modal 2 (click 'Ajouter une photo')
-const addPhotoButton = document.getElementById("add-photo");
-addPhotoButton.addEventListener("click", () => {
-    modal2.classList.remove("hidden");
-    modal1.classList.add("hidden");
-})
+}
 
+openModalBtn[0].addEventListener("click", openModal);
 
-// Close modal
 const closeModal = function(event) {
     event.preventDefault();
+    
+    modal[0].classList.add("hidden");
+    modal[1].classList.add("hidden");
+    overlay.classList.add("hidden");
 
     // Efface les miniatures
     const divGalleryModal = document.querySelector(".gallery-modal");
     divGalleryModal.innerHTML = "";
-
-    // Rajoute la class 'hidden' à la modal
-    const targetModal = event.target.closest(".modal");
-    if(targetModal) {
-        targetModal.classList.add("hidden");
-    }
-};
-
-const stopPropagation = function(event) {
-    event.stopPropagation();
 }
 
-document.querySelectorAll(".cross, .modal-stop").forEach(element => {
-    element.addEventListener("click", (event) => {
-        closeModal(event);
-        stopPropagation(event);
-    });
-});
+closeModalBtn[0].addEventListener("click", closeModal);
+closeModalBtn[1].addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
