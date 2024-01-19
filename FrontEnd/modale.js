@@ -33,7 +33,6 @@ const openModal = function() {
             // Création de la trashbin
             const divTrash = document.createElement("div");
             divTrash.className = "trash";
-            divTrash.id = work.id;
             const imgTrash = document.createElement("img");
             imgTrash.src = "assets/icons/trashbin.png";
             divTrash.appendChild(imgTrash);
@@ -47,6 +46,16 @@ const openModal = function() {
             const divGalleryModal = document.querySelector(".gallery-modal");
             divGalleryModal.appendChild(figureElement);
 
+
+            // Ajout d'un listener pour chaque élément .trash
+            divTrash.addEventListener("click", function(event) {
+                event.stopPropagation(); // Empêche la propagation de l'événement pour éviter de déclencher l'événement du parent
+
+                const workId = work.id;
+
+                // Appel de la fonction pour supprimer le projet
+                deleteWork(workId);
+            });
         }
 
     }
@@ -87,3 +96,29 @@ const closeModal = function(event) {
 closeModalBtn[0].addEventListener("click", closeModal);
 closeModalBtn[1].addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
+
+
+
+
+// Fonction pour supprimer un projet avec son ID
+async function deleteWork(workId) {
+    try {
+        const token = sessionStorage.getItem("token");
+        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+            method: "DELETE",
+            headers: {
+                // "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        if(response.ok) {
+            alert(`Projet avec l'ID ${workId} supprimé avec succès.`);
+        } else {
+            alert(`Échec de la suppression du projet avec l'ID ${workId}`)
+        }
+
+    } catch(error) {
+        alert('Erreur lors de la suppression du projet:', error);
+    }
+}
