@@ -103,3 +103,40 @@ if(token) {
         location.reload(); // Recharge la page une fois le token retiré
     })
 }
+
+
+
+// Modale on click
+const modalLink = document.getElementById("modif-projects");
+modalLink.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const modal1 = document.getElementById("modal-1");
+    modal1.classList.remove("hidden");
+
+    
+    function genererThumbnails(works) {
+    
+        // Creation d'une boucle pour parcourir et afficher tous les objets de works
+        for (let i = 0; i < works.length; i++) {
+            
+            const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
+    
+            // Création d'un élément 'image'
+            const imageElement = document.createElement("img");
+            imageElement.src = work.imageUrl;
+            imageElement.alt = work.title;
+            
+            // Création de l'élément 'figure' et rattachement de l'élément 'image'
+            const figureElement = document.createElement("figure");
+            figureElement.appendChild(imageElement);
+            
+            // Rattachement de l'élément 'figure' au DOM
+            const divGalleryModal = document.querySelector(".gallery-modal");
+            divGalleryModal.appendChild(figureElement);
+    
+        }
+    }
+
+    genererThumbnails(works);
+})
