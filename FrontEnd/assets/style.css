@@ -378,6 +378,7 @@ footer nav ul {
 	display: flex;
 	align-items: center;
 	height: 24px;
+	width: 100%;
 }
 
 #back {

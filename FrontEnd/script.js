@@ -119,7 +119,9 @@ const modal = document.querySelectorAll(".modal");
 const openModalBtn = document.querySelectorAll(".btn-open");
 const closeModalBtn = document.querySelectorAll(".btn-close");
 const overlay = document.querySelector(".overlay");
+const divGalleryModal = document.querySelector(".gallery-modal");
 
+// Open Modal 1
 const openModal = function() {
     modal[0].classList.remove("hidden");
     overlay.classList.remove("hidden");
@@ -167,10 +169,18 @@ const openModal = function() {
         modal[0].classList.add("hidden");
     })
 
+    // Back to modal 1
+    const backModal1 = document.querySelector("#back");
+    backModal1.addEventListener("click",() => {
+        divGalleryModal.innerHTML = "";
+        modal[1].classList.add("hidden");
+        openModal();
+    })
 }
 
 openModalBtn[0].addEventListener("click", openModal);
 
+// Close Modal 1 & 2
 const closeModal = function(event) {
     event.preventDefault();
     
@@ -179,7 +189,6 @@ const closeModal = function(event) {
     overlay.classList.add("hidden");
 
     // Efface les miniatures
-    const divGalleryModal = document.querySelector(".gallery-modal");
     divGalleryModal.innerHTML = "";
 }
 
