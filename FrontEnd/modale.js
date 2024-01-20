@@ -98,8 +98,10 @@ closeModalBtn[1].addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
 
-
-
+//------------------
+//
+//
+// Suppression d'un projet
 // Fonction pour supprimer un projet avec son ID
 async function deleteWork(workId) {
     try {
@@ -107,7 +109,6 @@ async function deleteWork(workId) {
         const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
             method: "DELETE",
             headers: {
-                // "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             }
         })
@@ -122,3 +123,36 @@ async function deleteWork(workId) {
         alert('Erreur lors de la suppression du projet:', error);
     }
 }
+
+
+//------------------
+//
+//
+// Création d'un projet
+// Fonction pour ajouter un projet
+const projectForm = document.getElementById("project-form");
+projectForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche le rechargement de la page
+
+    const formData = new FormData(this);
+    const token = sessionStorage.getItem("token");
+
+    fetch("http://localhost:5678/api/works", {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("Réponse du serveur : " + JSON.stringify(data));
+        console.log(data);
+    })
+    .catch(error => {
+        alert("Erreur lors de l'envoi du formulaire : " + error.message);
+        console.log("Erreur lors de l'envoi du formulaire : ", error);
+    });
+
+    alert("Après l'envoi du formulaire");
+});

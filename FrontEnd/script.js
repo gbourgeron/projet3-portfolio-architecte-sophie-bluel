@@ -110,8 +110,3 @@ if(token) {
         location.reload(); // Recharge la page une fois le token retiré
     })
 }
-
-//------------------
-//
-//
-// Delete works
