@@ -1,21 +1,3 @@
-// Récupération des works dans le localStorage
-let works = window.localStorage.getItem("works");
-
-// A verifier si utile... ATTENTION
-if (works === null) {
-    // Récupération des works (projets) depuis l'API et le end-point /works
-    const reponse = await fetch("http://localhost:5678/api/works");
-    works = await reponse.json(); // Nouveau tableau
-
-    // Transformation des pièces en JSON
-    const valeurWorks = JSON.stringify(works);
-    // Stockage des informations dans le localStorage
-    window.localStorage.setItem("works", valeurWorks);
-} else {
-    works = JSON.parse(works); // Reconstruction des données
-}
-
-
 //------------------
 //
 //
@@ -27,59 +9,24 @@ const overlay = document.querySelector(".overlay");
 const divGalleryModal = document.querySelector(".gallery-modal");
 
 // Open Modal 1
-const openModal = function() {
+const openModal = async function() {
     modal[0].classList.remove("hidden");
     overlay.classList.remove("hidden");
 
-    // Fonction qui génère toute la galerie pour la modale
-    function genererThumbnails(works) {
-    
-        // Creation d'une boucle pour récupérer tous les objets de works
-        for (let i = 0; i < works.length; i++) {
-            
-            const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
+    // Récupération des works dans le localStorage
+    let works = window.localStorage.getItem("works");
 
-            // Création d'un élément 'image'
-            const imageElement = document.createElement("img");
-            imageElement.src = work.imageUrl;
-            imageElement.alt = work.title;
+    if (works === null) {
+        // Récupération des works (projets) depuis l'API et le end-point /works
+        const reponse = await fetch("http://localhost:5678/api/works");
+        works = await reponse.json(); // Nouveau tableau
 
-            // Création de la trashbin
-            const divTrash = document.createElement("div");
-            divTrash.className = "trash";
-            const imgTrash = document.createElement("img");
-            imgTrash.src = "assets/icons/trashbin.png";
-            divTrash.appendChild(imgTrash);
-            
-            // Création de l'élément 'figure' et rattachement de l'élément 'imageElement' et 'divTrash'
-            const figureElement = document.createElement("figure");
-            figureElement.id = `${work.id}-thumb`;
-            figureElement.appendChild(imageElement);
-            figureElement.appendChild(divTrash);
-            
-            // Rattachement de l'élément 'figure' au DOM
-            const divGalleryModal = document.querySelector(".gallery-modal");
-            divGalleryModal.appendChild(figureElement);
-
-
-            // Ajout d'un listener pour chaque élément .trash
-            divTrash.addEventListener("click", function(event) {
-                event.stopPropagation(); // Empêche la propagation de l'événement pour éviter de déclencher l'événement du parent
-
-                // const workId = work.id;
-
-                // Appel de la fonction pour supprimer le projet
-                deleteWork(work.id);
-
-                // Retirer l'élément de la modale
-                const deletedWorkModal = document.getElementById(`${work.id}-thumb`);
-                deletedWorkModal.remove();
-                // Retirer l'élément de la galerie
-                const deletedWorkGall = document.getElementById(`${work.id}-gall`);
-                deletedWorkGall.remove();
-            });
-        }
-
+        // Transformation des pièces en JSON
+        const valeurWorks = JSON.stringify(works);
+        // Stockage des informations dans le localStorage
+        window.localStorage.setItem("works", valeurWorks);
+    } else {
+        works = JSON.parse(works); // Reconstruction des données
     }
 
     // Appel de la fonction pour afficher tous les projets
@@ -118,6 +65,64 @@ const closeModal = function(event) {
 closeModalBtn[0].addEventListener("click", closeModal);
 closeModalBtn[1].addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
+
+
+//------------------
+//
+//
+// Fonction qui génère tous les works pour la modale
+function genererThumbnails(works) {
+
+    // Nettoyer la div pour s'assurer qu'il ne reste pas d'anciennes miniatures
+    divGalleryModal.innerHTML = "";
+
+    // Creation d'une boucle pour récupérer tous les objets de works
+    for (let i = 0; i < works.length; i++) {
+        
+        const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
+
+        // Création d'un élément 'image'
+        const imageElement = document.createElement("img");
+        imageElement.src = work.imageUrl;
+        imageElement.alt = work.title;
+
+        // Création de la trashbin
+        const divTrash = document.createElement("div");
+        divTrash.className = "trash";
+        const imgTrash = document.createElement("img");
+        imgTrash.src = "assets/icons/trashbin.png";
+        divTrash.appendChild(imgTrash);
+        
+        // Création de l'élément 'figure' et rattachement de l'élément 'imageElement' et 'divTrash'
+        const figureElement = document.createElement("figure");
+        figureElement.id = `${work.id}-thumb`;
+        figureElement.appendChild(imageElement);
+        figureElement.appendChild(divTrash);
+        
+        // Rattachement de l'élément 'figure' au DOM
+        const divGalleryModal = document.querySelector(".gallery-modal");
+        divGalleryModal.appendChild(figureElement);
+
+
+        // Ajout d'un listener pour chaque élément .trash
+        divTrash.addEventListener("click", function(event) {
+            event.stopPropagation(); // Empêche la propagation de l'événement pour éviter de déclencher l'événement du parent
+
+            // const workId = work.id;
+
+            // Appel de la fonction pour supprimer le projet
+            deleteWork(work.id);
+
+            // Retirer l'élément de la modale
+            const deletedWorkModal = document.getElementById(`${work.id}-thumb`);
+            deletedWorkModal.remove();
+            // Retirer l'élément de la galerie
+            const deletedWorkGall = document.getElementById(`${work.id}-gall`);
+            deletedWorkGall.remove();
+        });
+    }
+
+}
 
 
 //------------------
@@ -171,15 +176,13 @@ projectForm.addEventListener("submit", function(event) {
     .then(data => {
         alert("Réponse du serveur : " + JSON.stringify(data));
 
-        if(data.ok) {
-            window.localStorage.setItem("work");
+        // if(data.ok) {
+        //     window.localStorage.setItem("work");
             
-        }
+        // }
     })
     .catch(error => {
         alert("Erreur lors de l'envoi du formulaire : " + error.message);
         console.log("Erreur lors de l'envoi du formulaire : ", error);
     });
-
-    alert("Après l'envoi du formulaire");
 });
