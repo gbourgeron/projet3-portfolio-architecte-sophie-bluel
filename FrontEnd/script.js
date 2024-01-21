@@ -117,7 +117,7 @@ if(token) {
     
     // Déconnexion en cas de click sur log-link
     logLink.addEventListener("click", (event) => {
-        event.preventDefault(); // Empêche le rechargement de la plage
+        event.preventDefault(); // Empêche la redirection vers login.html
         localStorage.removeItem("token"); // Retire le token
         location.reload(); // Recharge la page une fois le token retiré
     })

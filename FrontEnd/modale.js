@@ -1,6 +1,20 @@
-// Récupération des works (projets) depuis l'API et le end-point /works
-const reponse = await fetch("http://localhost:5678/api/works");
-const works = await reponse.json();
+// Récupération des works dans le localStorage
+let works = window.localStorage.getItem("works");
+
+// A verifier si utile... ATTENTION
+if (works === null) {
+    // Récupération des works (projets) depuis l'API et le end-point /works
+    const reponse = await fetch("http://localhost:5678/api/works");
+    works = await reponse.json(); // Nouveau tableau
+
+    // Transformation des pièces en JSON
+    const valeurWorks = JSON.stringify(works);
+    // Stockage des informations dans le localStorage
+    window.localStorage.setItem("works", valeurWorks);
+} else {
+    works = JSON.parse(works); // Reconstruction des données
+}
+
 
 //------------------
 //
@@ -17,7 +31,7 @@ const openModal = function() {
     modal[0].classList.remove("hidden");
     overlay.classList.remove("hidden");
 
-    // Fonction qui génère toute la gallerie pour la modale
+    // Fonction qui génère toute la galerie pour la modale
     function genererThumbnails(works) {
     
         // Creation d'une boucle pour récupérer tous les objets de works
@@ -39,6 +53,7 @@ const openModal = function() {
             
             // Création de l'élément 'figure' et rattachement de l'élément 'imageElement' et 'divTrash'
             const figureElement = document.createElement("figure");
+            figureElement.id = work.id;
             figureElement.appendChild(imageElement);
             figureElement.appendChild(divTrash);
             
@@ -55,6 +70,10 @@ const openModal = function() {
 
                 // Appel de la fonction pour supprimer le projet
                 deleteWork(workId);
+
+                // Retirer l'élément de la modale
+                const deletedWork = document.getElementById(workId);
+                deletedWork.remove();
             });
         }
 
@@ -105,7 +124,7 @@ overlay.addEventListener("click", closeModal);
 // Fonction pour supprimer un projet avec son ID
 async function deleteWork(workId) {
     try {
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token");
         const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
             method: "DELETE",
             headers: {
@@ -114,7 +133,8 @@ async function deleteWork(workId) {
         })
 
         if(response.ok) {
-            alert(`Projet avec l'ID ${workId} supprimé avec succès.`);
+            window.localStorage.removeItem("works");
+            // alert(`Projet avec l'ID ${workId} supprimé avec succès.`);
         } else {
             alert(`Échec de la suppression du projet avec l'ID ${workId}`)
         }
@@ -135,7 +155,7 @@ projectForm.addEventListener("submit", function(event) {
     event.preventDefault(); // Empêche le rechargement de la page
 
     const formData = new FormData(this);
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     fetch("http://localhost:5678/api/works", {
         method: 'POST',
@@ -147,7 +167,11 @@ projectForm.addEventListener("submit", function(event) {
     .then(response => response.json())
     .then(data => {
         alert("Réponse du serveur : " + JSON.stringify(data));
-        console.log(data);
+
+        if(data.ok) {
+            window.localStorage.setItem("work");
+            
+        }
     })
     .catch(error => {
         alert("Erreur lors de l'envoi du formulaire : " + error.message);
