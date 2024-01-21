@@ -35,6 +35,7 @@ function genererWorks(works) {
         
         // Création de l'élément 'figure' et rattachement des éléments 'image' et 'figcaption'
         const figureElement = document.createElement("figure");
+        figureElement.id = `${work.id}-gall`;
         figureElement.appendChild(imageElement);
         figureElement.appendChild(figCaptionElement);
         

@@ -53,7 +53,7 @@ const openModal = function() {
             
             // Création de l'élément 'figure' et rattachement de l'élément 'imageElement' et 'divTrash'
             const figureElement = document.createElement("figure");
-            figureElement.id = work.id;
+            figureElement.id = `${work.id}-thumb`;
             figureElement.appendChild(imageElement);
             figureElement.appendChild(divTrash);
             
@@ -66,14 +66,17 @@ const openModal = function() {
             divTrash.addEventListener("click", function(event) {
                 event.stopPropagation(); // Empêche la propagation de l'événement pour éviter de déclencher l'événement du parent
 
-                const workId = work.id;
+                // const workId = work.id;
 
                 // Appel de la fonction pour supprimer le projet
-                deleteWork(workId);
+                deleteWork(work.id);
 
                 // Retirer l'élément de la modale
-                const deletedWork = document.getElementById(workId);
-                deletedWork.remove();
+                const deletedWorkModal = document.getElementById(`${work.id}-thumb`);
+                deletedWorkModal.remove();
+                // Retirer l'élément de la galerie
+                const deletedWorkGall = document.getElementById(`${work.id}-gall`);
+                deletedWorkGall.remove();
             });
         }
 
