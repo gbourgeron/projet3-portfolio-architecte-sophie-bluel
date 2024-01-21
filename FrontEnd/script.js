@@ -1,6 +1,18 @@
-// Récupération des works (projets) depuis l'API et le end-point /works
-const reponse = await fetch("http://localhost:5678/api/works");
-const works = await reponse.json(); // Nouveau tableau
+// Récupération des works éventuellement stockés dans le localStorage
+let works = window.localStorage.getItem("works");
+
+if (works === null) {
+    // Récupération des works (projets) depuis l'API et le end-point /works
+    const reponse = await fetch("http://localhost:5678/api/works");
+    works = await reponse.json(); // Nouveau tableau
+
+    // Transformation des pièces en JSON
+    const valeurWorks = JSON.stringify(works);
+    // Stockage des informations dans le localStorage
+    window.localStorage.setItem("works", valeurWorks);
+} else {
+    works = JSON.parse(works); // Reconstruction des données
+}
 
 //------------------
 //
@@ -82,7 +94,7 @@ allFilterButton.addEventListener("click", function() {
 //
 //
 // Récupération du token d'authentification
-const token = sessionStorage.getItem("token");
+const token = localStorage.getItem("token");
 
 // Modification des éléments de la page index.html si présence du token
 if(token) {
@@ -106,7 +118,7 @@ if(token) {
     // Déconnexion en cas de click sur log-link
     logLink.addEventListener("click", (event) => {
         event.preventDefault(); // Empêche le rechargement de la plage
-        sessionStorage.removeItem("token"); // Retire le token
+        localStorage.removeItem("token"); // Retire le token
         location.reload(); // Recharge la page une fois le token retiré
     })
 }

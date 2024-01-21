@@ -35,7 +35,7 @@ function userLogin() {
         .then(data => {
             // Stockage du token localement
             const token = data.token;
-            sessionStorage.setItem('token', token);            
+            localStorage.setItem('token', token);            
             
             // Redirection sur index.html après un login réussi
             window.location.href = "index.html";
