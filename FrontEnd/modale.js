@@ -159,30 +159,71 @@ async function deleteWork(workId) {
 // Création d'un projet
 // Fonction pour ajouter un projet
 const projectForm = document.getElementById("project-form");
-projectForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêche le rechargement de la page
+projectForm.addEventListener("submit", async function (event) {
+    event.preventDefault(); // Empêche le rechargement de la page à la validation du formulaire
 
-    const formData = new FormData(this);
-    const token = localStorage.getItem("token");
+    try {
+        const formData = new FormData(this);
+        const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5678/api/works", {
-        method: 'POST',
-        headers: {
-            "Authorization": `Bearer ${token}`
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert("Réponse du serveur : " + JSON.stringify(data));
+        const response = await fetch ("http://localhost:5678/api/works", {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            body: formData
+        });
 
-        // if(data.ok) {
-        //     window.localStorage.setItem("work");
-            
-        // }
-    })
-    .catch(error => {
+        if(response.ok) {
+            alert("Projet ajouté avec succès.");
+
+        } else {
+            alert("Échec de l'ajout du projet. Veuillez réessayer");
+        }
+    
+    } catch(error) {
         alert("Erreur lors de l'envoi du formulaire : " + error.message);
         console.log("Erreur lors de l'envoi du formulaire : ", error);
-    });
-});
+    }
+
+
+})
+
+
+
+
+
+
+//------------------
+//
+//
+// Création d'un projet
+// Fonction pour ajouter un projet
+// const projectForm = document.getElementById("project-form");
+// projectForm.addEventListener("submit", function(event) {
+//     event.preventDefault(); // Empêche le rechargement de la page
+
+//     const formData = new FormData(this);
+//     const token = localStorage.getItem("token");
+
+//     fetch("http://localhost:5678/api/works", {
+//         method: 'POST',
+//         headers: {
+//             "Authorization": `Bearer ${token}`
+//         },
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         alert("Réponse du serveur : " + JSON.stringify(data));
+
+//         if(data.ok) {
+//             window.localStorage.removeItem("work");
+            
+//         }
+//     })
+//     .catch(error => {
+//         alert("Erreur lors de l'envoi du formulaire : " + error.message);
+//         console.log("Erreur lors de l'envoi du formulaire : ", error);
+//     });
+// });
