@@ -14,11 +14,14 @@ async function getWorks() {
     } else {
         works = JSON.parse(works); // Reconstruction des données
     }
-
+    
     return works
 }
 
-const works = await getWorks();
+let works = await getWorks();
+
+const divGallery = document.querySelector(".gallery");
+const divGalleryModal = document.querySelector(".gallery-modal");
 
 //------------------
 //
@@ -26,6 +29,8 @@ const works = await getWorks();
 // Fonction qui génère toute la 'gallery'
 function genererWorks(works) {
     
+    divGallery.innerHTML = "";
+
     // Creation d'une boucle pour parcourir et afficher tous les objets de works
     for (let i = 0; i < works.length; i++) {
         
@@ -143,14 +148,15 @@ const openModalBtn = document.querySelectorAll(".btn-open");
 const openModal2Btn = document.querySelector("#open-modal-2");
 const closeModalBtn = document.querySelectorAll(".btn-close");
 const overlay = document.querySelector(".overlay");
-const divGalleryModal = document.querySelector(".gallery-modal");
 const backModal1 = document.querySelector("#back");
 
 // Open Modal 1
-const openModal = function() {
+const openModal = async function() {
     modal[0].classList.remove("hidden");
     modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
+
+    works = await getWorks();
 
     // Appel de la fonction pour afficher tous les works
     genererThumbnails(works);
@@ -229,6 +235,8 @@ function genererThumbnails(works) {
             // Retirer l'élément de la galerie
             const deletedWorkGall = document.getElementById(`${work.id}-gall`);
             deletedWorkGall.remove();
+
+            window.localStorage.removeItem("works");
         });
     }
 
@@ -251,7 +259,6 @@ async function deleteWork(workId) {
         })
 
         if(response.ok) {
-            window.localStorage.removeItem("works");
             // alert(`Projet avec l'ID ${workId} supprimé avec succès.`);
         } else {
             alert(`Échec de la suppression du projet avec l'ID ${workId}`)
@@ -289,11 +296,9 @@ projectForm.addEventListener("submit", async function (event) {
 
             // Attendre la mise à jour de works
             const updatedWorks = await getWorks();
-            
-            const divGallery = document.querySelector(".gallery");
-            divGallery.innerHTML = "";
+                        
             genererWorks(updatedWorks);
-            genererThumbnails(updatedWorks);
+            // genererThumbnails(updatedWorks);
             
             alert("Projet ajouté avec succès.");        
 
