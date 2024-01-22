@@ -1,18 +1,24 @@
 // Récupération des works éventuellement stockés dans le localStorage
-let works = window.localStorage.getItem("works");
+async function getWorks() {
+    let works = window.localStorage.getItem("works");
+    
+    if (works === null) {
+        // Récupération des works (projets) depuis l'API et le end-point /works
+        const reponse = await fetch("http://localhost:5678/api/works");
+        works = await reponse.json(); // Nouveau tableau
+        
+        // Transformation des pièces en JSON
+        const valeurWorks = JSON.stringify(works);
+        // Stockage des informations dans le localStorage
+        window.localStorage.setItem("works", valeurWorks);
+    } else {
+        works = JSON.parse(works); // Reconstruction des données
+    }
 
-if (works === null) {
-    // Récupération des works (projets) depuis l'API et le end-point /works
-    const reponse = await fetch("http://localhost:5678/api/works");
-    works = await reponse.json(); // Nouveau tableau
-
-    // Transformation des pièces en JSON
-    const valeurWorks = JSON.stringify(works);
-    // Stockage des informations dans le localStorage
-    window.localStorage.setItem("works", valeurWorks);
-} else {
-    works = JSON.parse(works); // Reconstruction des données
+    return works
 }
+
+const works = await getWorks();
 
 //------------------
 //
@@ -131,67 +137,42 @@ if(token) {
 //------------------
 //
 //
-// Modals
+// Variable for Modals
 const modal = document.querySelectorAll(".modal");
 const openModalBtn = document.querySelectorAll(".btn-open");
+const openModal2Btn = document.querySelector("#open-modal-2");
 const closeModalBtn = document.querySelectorAll(".btn-close");
 const overlay = document.querySelector(".overlay");
 const divGalleryModal = document.querySelector(".gallery-modal");
+const backModal1 = document.querySelector("#back");
 
 // Open Modal 1
-const openModal = async function() {
+const openModal = function() {
     modal[0].classList.remove("hidden");
+    modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
 
-    // Récupération des works dans le localStorage
-    let works = window.localStorage.getItem("works");
-
-    if (works === null) {
-        // Récupération des works (projets) depuis l'API et le end-point /works
-        const reponse = await fetch("http://localhost:5678/api/works");
-        works = await reponse.json(); // Nouveau tableau
-
-        // Transformation des works en JSON
-        const valeurWorks = JSON.stringify(works);
-        // Stockage des informations dans le localStorage
-        window.localStorage.setItem("works", valeurWorks);
-    } else {
-        works = JSON.parse(works); // Reconstruction des données
-    }
-
-    // Appel de la fonction pour afficher tous les projets
+    // Appel de la fonction pour afficher tous les works
     genererThumbnails(works);
-
-    // Open modal 2 (click 'Ajouter une photo')
-    const openModal2 = document.querySelector("#open-modal-2");
-    openModal2.addEventListener("click", () => {
-        modal[1].classList.remove("hidden");
-        modal[0].classList.add("hidden");
-    })
-
-    // Back to modal 1
-    const backModal1 = document.querySelector("#back");
-    backModal1.addEventListener("click",() => {
-        divGalleryModal.innerHTML = "";
-        modal[1].classList.add("hidden");
-        openModal();
-    })
 }
 
-openModalBtn[0].addEventListener("click", openModal);
+// Open modal 2
+function openModal2() {
+    modal[1].classList.remove("hidden");
+    modal[0].classList.add("hidden");
+}
 
 // Close Modal 1 & 2
-const closeModal = function(event) {
-    event.preventDefault();
-    
+function closeModal() {    
     modal[0].classList.add("hidden");
     modal[1].classList.add("hidden");
     overlay.classList.add("hidden");
-
-    // Efface les miniatures
-    divGalleryModal.innerHTML = "";
 }
 
+// Listeners for Modals
+openModalBtn[0].addEventListener("click", openModal);
+openModal2Btn.addEventListener("click", openModal2);
+backModal1.addEventListener("click", openModal);
 closeModalBtn[0].addEventListener("click", closeModal);
 closeModalBtn[1].addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
@@ -202,7 +183,7 @@ overlay.addEventListener("click", closeModal);
 //
 // Fonction qui génère tous les works pour la modale
 function genererThumbnails(works) {
-
+        
     // Nettoyer la div pour s'assurer qu'il ne reste pas d'anciennes miniatures
     divGalleryModal.innerHTML = "";
 
@@ -304,20 +285,17 @@ projectForm.addEventListener("submit", async function (event) {
         });
 
         if(response.ok) {
-            
-            const responseData = await response.json(); // Extraction des données JSON de la réponse
-            const newWorkAdded = JSON.stringify(responseData); // Transformation du work en JSON
-            
-            // let works = window.localStorage.getItem("works");
-            // console.log(works);
-            works.push(newWorkAdded);
-            // works = window.localStorage.setItem("works");
+            window.localStorage.removeItem("works");
 
-            genererWorks(works);
+            // Attendre la mise à jour de works
+            const updatedWorks = await getWorks();
             
-            alert("Projet ajouté avec succès." + responseData);
-            console.log(responseData);
-
+            const divGallery = document.querySelector(".gallery");
+            divGallery.innerHTML = "";
+            genererWorks(updatedWorks);
+            genererThumbnails(updatedWorks);
+            
+            alert("Projet ajouté avec succès.");        
 
         } else {
             alert("Échec de l'ajout du projet. Veuillez réessayer");
