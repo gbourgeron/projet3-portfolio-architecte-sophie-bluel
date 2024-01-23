@@ -196,6 +196,8 @@ const openModal = async function() { // changer en function directement
     modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
 
+    resetModal2();
+
     works = await getWorks();
 
     // Appel de la fonction pour afficher tous les works
@@ -415,6 +417,7 @@ function displaySelectedImage() {
         // Créez un élément img
         const imgElement = document.createElement('img');
         imgElement.src = imageURL;
+        imgElement.id = "image-to-upload"
 
         // Ajoutez l'élément img à la div parente
         fileDiv.appendChild(imgElement);
@@ -439,3 +442,27 @@ function displaySelectedImage() {
     }
   }
 
+
+  // Function to reset Modal 2 state
+function resetModal2() {
+    // Réinitialiser l'état de la modal 2 à son état d'origine
+    const fileInput = document.getElementById('file-input');
+    const fileDiv = document.getElementById('filediv');
+    const imgElement = document.getElementById("image-to-upload");
+
+    // Supprimer l'élément img si présent
+    if (imgElement) {
+        imgElement.remove();
+    }
+
+    // Réinitialiser les styles
+    const pictureFileDiv = document.getElementById('picture-filediv');
+    const addButtonFileDiv = document.getElementById("add-button-filediv");
+    const textFileDiv = document.getElementById('text-filediv');
+    pictureFileDiv.classList.remove('hidden');
+    addButtonFileDiv.classList.remove("hidden");
+    textFileDiv.classList.remove("hidden");
+
+    // Effacer le contenu du champ de fichier
+    fileInput.value = "";
+}
