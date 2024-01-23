@@ -343,6 +343,14 @@ footer nav ul {
 	background-color: rgb(250, 152, 152);
 }
 
+/* Success message */
+.success-message {
+	font-size: 12px;
+	padding: 10px;
+	border-radius: 4px;
+	border: 1px solid rgb(67, 250, 128);
+	background-color: rgb(152, 250, 168);
+}
 
 /* Modales */
 .modal {

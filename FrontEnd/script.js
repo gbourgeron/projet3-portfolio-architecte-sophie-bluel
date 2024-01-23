@@ -276,6 +276,7 @@ function genererThumbnails(works) {
             const deletedWorkGall = document.getElementById(`${work.id}-gall`);
             deletedWorkGall.remove();
 
+            // Clear localStorage
             window.localStorage.removeItem("works");
         });
     }
@@ -300,6 +301,7 @@ async function deleteWork(workId) {
 
         if(response.ok) {
             // alert(`Projet avec l'ID ${workId} supprimé avec succès.`);
+
         } else {
             alert(`Échec de la suppression du projet avec l'ID ${workId}`)
         }
@@ -320,7 +322,7 @@ projectForm.addEventListener("submit", async function (event) {
     // Prevent reload page after submit form
     event.preventDefault();
 
-    const errorMessage = document.getElementById("error-add-project-msg");
+    const statutMsg = document.getElementById("statut-msg");
 
     try {
         const formData = new FormData(this);
@@ -335,22 +337,37 @@ projectForm.addEventListener("submit", async function (event) {
         });
 
         if(response.ok) {
+            // Clear localStorage
             window.localStorage.removeItem("works");
 
             // Wait update of works
             const updatedWorks = await getWorks();
             genererWorks(updatedWorks);
             
-            // console.log("Projet ajouté avec succès.");        
+            statutMsg.classList.add("success-message");
+            statutMsg.classList.remove("error-message");
+            statutMsg.classList.remove("hidden");
+            statutMsg.textContent = "Projet ajouté avec succès.";
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            statutMsg.classList.add("hidden");
 
             // Clear form & close modal
             projectForm.reset();
             closeModal();
+        } else {
+            statutMsg.classList.add("error-message");
+            statutMsg.classList.remove("success-message");
+            statutMsg.classList.remove("hidden");
+            statutMsg.textContent = "Échec de l'ajout du projet. Veuillez réessayer.";
+
+            setTimeout(() => {
+                statutMsg.classList.add("hidden");
+            }, 2000);
         }
     
     } catch(error) {
-        errorMessage.classList.remove("hidden");
-        errorMessage.textContent = "Échec de l'ajout du projet. Veuillez réessayer.";
+        
         
         console.log("Erreur lors de l'envoi du formulaire : ", error);
     }

@@ -51,6 +51,9 @@ function userLogin() {
             } else {
                 // Message si identifiants incorrects
                 errorMessage.textContent = "Votre combinaison email/mot de passe est incorrecte."
+                setTimeout(() => {
+                    errorMessage.classList.add("hidden");
+                }, 2000);
             }
         });
     });
