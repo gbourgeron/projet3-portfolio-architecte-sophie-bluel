@@ -62,43 +62,72 @@ genererWorks(works);
 
 //------------------
 //
-// Boutons de filtrages V2
-async function filterButtons() {
+//
+// Get categories
+async function getCategories() {
     try {
         const response = await fetch("http://localhost:5678/api/categories");
-        const categories = await response.json();
-
-        const filterBar = document.getElementById("filter-bar");
-
-        // Create a button for each category
-        categories.forEach(category => {
-            const filterButton = document.createElement("button");
-            filterButton.className = "filter-button";
-            filterButton.id = `filter-btn-${category.id}`;
-            filterButton.innerText = category.name;
-
-            filterButton.addEventListener("click", function() {
-                const filteredWorks = works.filter(work => work.category.id === category.id);
-                genererWorks(filteredWorks);
-            })
-
-            // Add each button to the filter bar
-            filterBar.appendChild(filterButton);
-        })
+        return await response.json();
     } catch {
         console.error("Erreur lors de la récupération des catégories :", error);
+        return [];
     }
 }
 
-filterButtons();
+const categories = await getCategories();
 
-// Filtre Tous
-const allFilterButton = document.getElementById("all-button");
-allFilterButton.addEventListener("click", function() {
-    // Suppression de tous les éléments (filtrés ou non) puis régénération à nouveau de tous les éléments
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(works);
-})
+
+//------------------
+//
+//
+// Create filters V2
+function createFilterButtons(categories) {
+    const filterBar = document.getElementById("filter-bar");
+
+    // Create a button for all works
+    const allFilterButton = document.createElement("button");
+    allFilterButton.className = "filter-button";
+    allFilterButton.id = "all-filter-btn";
+    allFilterButton.innerText = "Tous";
+
+    allFilterButton.addEventListener("click", () => {
+        // Clear all previous works filtered
+        document.querySelector(".gallery").innerHTML = "";
+        genererWorks(works);
+    });
+
+    filterBar.appendChild(allFilterButton);
+
+    // Create a button for each category
+    categories.forEach(category => {
+        const filterButton = document.createElement("button");
+        filterButton.className = "filter-button";
+        filterButton.id = `filter-btn-${category.id}`;
+        filterButton.innerText = category.name;
+
+        filterButton.addEventListener("click", () => {
+            const filteredWorks = works.filter(work => work.category.id === category.id);
+            genererWorks(filteredWorks);
+        })
+
+        // Add each button to the filter bar
+        filterBar.appendChild(filterButton);
+    })
+
+}
+
+createFilterButtons(categories);
+
+//------------------
+//
+//
+// Select options
+async function selectOptions() {
+
+}
+
+
+
 
 //------------------
 //
@@ -149,7 +178,7 @@ const overlay = document.querySelector(".overlay");
 const backModal1 = document.querySelector("#back");
 
 // Open Modal 1
-const openModal = async function() {
+const openModal = async function() { // changer en function directement
     modal[0].classList.remove("hidden");
     modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
