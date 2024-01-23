@@ -62,37 +62,35 @@ genererWorks(works);
 
 //------------------
 //
-//
-// Boutons de filtrages 
-// Filtre Objets
-const objFilterButton = document.getElementById("objets");
-objFilterButton.addEventListener("click", function() {
-    const objFiltres = works.filter(work => work.category.id === 1);
+// Boutons de filtrages V2
+async function filterButtons() {
+    try {
+        const response = await fetch("http://localhost:5678/api/categories");
+        const categories = await response.json();
 
-    // Suppression de tous les éléments puis régénération des éléments filtrés
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(objFiltres); 
-})
+        const filterBar = document.getElementById("filter-bar");
 
-// Filtre Appartements
-const appartFilterButton = document.getElementById("appartements");
-appartFilterButton.addEventListener("click", function() {
-    const appartFiltres = works.filter(work => work.category.id === 2);
+        // Create a button for each category
+        categories.forEach(category => {
+            const filterButton = document.createElement("button");
+            filterButton.className = "filter-button";
+            filterButton.id = `filter-btn-${category.id}`;
+            filterButton.innerText = category.name;
 
-    // Suppression de tous les éléments puis régénération des éléments filtrés
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(appartFiltres);
-})
+            filterButton.addEventListener("click", function() {
+                const filteredWorks = works.filter(work => work.category.id === category.id);
+                genererWorks(filteredWorks);
+            })
 
-// Filtre Hotels & Restaurants
-const hotFilterButton = document.getElementById("hotels-restaurants");
-hotFilterButton.addEventListener("click", function() {
-    const hotFiltres = works.filter(work => work.category.id === 3);
+            // Add each button to the filter bar
+            filterBar.appendChild(filterButton);
+        })
+    } catch {
+        console.error("Erreur lors de la récupération des catégories :", error);
+    }
+}
 
-    // Suppression de tous les éléments puis régénération des éléments filtrés
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(hotFiltres);
-})
+filterButtons();
 
 // Filtre Tous
 const allFilterButton = document.getElementById("all-button");
