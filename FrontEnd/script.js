@@ -118,15 +118,25 @@ function createFilterButtons(categories) {
 
 createFilterButtons(categories);
 
+
 //------------------
 //
 //
 // Select options
-async function selectOptions() {
+function createSelectOptions(categories) {
+    const selectMenu = document.getElementById("category");
 
+    // Create an option for each category
+    categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.innerText = category.name;
+
+        selectMenu.appendChild(option);
+    })
 }
 
-
+createSelectOptions(categories);
 
 
 //------------------
