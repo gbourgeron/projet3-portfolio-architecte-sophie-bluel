@@ -338,6 +338,7 @@ footer nav ul {
 .error-message {
 	font-size: 12px;
 	padding: 10px;
+	margin: 10px;
 	border-radius: 4px;
 	border: 1px solid rgb(250, 67, 67);
 	background-color: rgb(250, 152, 152);
@@ -347,6 +348,7 @@ footer nav ul {
 .success-message {
 	font-size: 12px;
 	padding: 10px;
+	margin: 10px;
 	border-radius: 4px;
 	border: 1px solid rgb(67, 250, 128);
 	background-color: rgb(152, 250, 168);
