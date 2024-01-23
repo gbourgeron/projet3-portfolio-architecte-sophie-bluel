@@ -1,7 +1,7 @@
 // Fonction pour se loguer 
 function userLogin() {
 
-    const errorMessage = document.getElementById("error-message");
+    const errorMessage = document.getElementById("error-login-msg");
 
     const loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", function(event) {

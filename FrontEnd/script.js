@@ -1,10 +1,13 @@
+// API address
+const apiUrl = "http://localhost:5678/api/";
+
 // Récupération des works éventuellement stockés dans le localStorage
 async function getWorks() {
     let works = window.localStorage.getItem("works");
     
     if (works === null) {
         // Récupération des works (projets) depuis l'API et le end-point /works
-        const reponse = await fetch("http://localhost:5678/api/works");
+        const reponse = await fetch(`${apiUrl}works`);
         works = await reponse.json(); // Nouveau tableau
         
         // Transformation des pièces en JSON
@@ -26,7 +29,7 @@ const divGalleryModal = document.querySelector(".gallery-modal");
 //------------------
 //
 //
-// Fonction qui génère toute la 'gallery'
+// Create all works for main page
 function genererWorks(works) {
     
     divGallery.innerHTML = "";
@@ -57,7 +60,7 @@ function genererWorks(works) {
     }
 }
 
-// Premier affichage de la page
+// First display of the works
 genererWorks(works);
 
 //------------------
@@ -66,7 +69,7 @@ genererWorks(works);
 // Get categories
 async function getCategories() {
     try {
-        const response = await fetch("http://localhost:5678/api/categories");
+        const response = await fetch(`${apiUrl}categories`);
         return await response.json();
     } catch {
         console.error("Erreur lors de la récupération des catégories :", error);
@@ -142,7 +145,7 @@ createSelectOptions(categories);
 //------------------
 //
 //
-// Récupération du token d'authentification
+// Get token
 const token = localStorage.getItem("token");
 
 // Modification des éléments de la page index.html si présence du token
@@ -224,7 +227,7 @@ overlay.addEventListener("click", closeModal);
 //------------------
 //
 //
-// Fonction qui génère tous les works pour la modale
+// Create all works for the modal
 function genererThumbnails(works) {
         
     // Nettoyer la div pour s'assurer qu'il ne reste pas d'anciennes miniatures
@@ -283,12 +286,12 @@ function genererThumbnails(works) {
 //------------------
 //
 //
-// Suppression d'un projet
-// Fonction pour supprimer un projet avec son ID
+// Delete a work
+// Function to delete a work with his ID
 async function deleteWork(workId) {
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+        const response = await fetch(`${apiUrl}works/${workId}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -310,17 +313,20 @@ async function deleteWork(workId) {
 //------------------
 //
 //
-// Création d'un projet
-// Fonction pour ajouter un projet
+// Create a work
+// Function to add a work
 const projectForm = document.getElementById("project-form");
 projectForm.addEventListener("submit", async function (event) {
-    event.preventDefault(); // Empêche le rechargement de la page à la validation du formulaire
+    // Prevent reload page after submit form
+    event.preventDefault();
+
+    const errorMessage = document.getElementById("error-add-project-msg");
 
     try {
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
 
-        const response = await fetch ("http://localhost:5678/api/works", {
+        const response = await fetch (`${apiUrl}works`, {
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -331,20 +337,21 @@ projectForm.addEventListener("submit", async function (event) {
         if(response.ok) {
             window.localStorage.removeItem("works");
 
-            // Attendre la mise à jour de works
+            // Wait update of works
             const updatedWorks = await getWorks();
-                        
             genererWorks(updatedWorks);
-            // genererThumbnails(updatedWorks);
             
-            alert("Projet ajouté avec succès.");        
+            // console.log("Projet ajouté avec succès.");        
 
-        } else {
-            alert("Échec de l'ajout du projet. Veuillez réessayer");
+            // Clear form & close modal
+            projectForm.reset();
+            closeModal();
         }
     
     } catch(error) {
-        alert("Erreur lors de l'envoi du formulaire : " + error.message);
+        errorMessage.classList.remove("hidden");
+        errorMessage.textContent = "Échec de l'ajout du projet. Veuillez réessayer.";
+        
         console.log("Erreur lors de l'envoi du formulaire : ", error);
     }
 
