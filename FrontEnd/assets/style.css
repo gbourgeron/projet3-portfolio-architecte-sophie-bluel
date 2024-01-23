@@ -489,8 +489,8 @@ footer nav ul {
 	flex-direction: column;
 }
 
-/* Drop zone */
-#drop_zone {
+/* File div */
+#filediv {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -500,12 +500,12 @@ footer nav ul {
 	background-color: #E8F1F6;
 }
 
-#picture-dropzone {
+#picture-filediv {
 	height: 76px;
 	width: 76px;
 }
 
-#add-button-dropzone {
+#add-button-filediv {
 	height: 36px;
 	width: 173px;
 	margin: 5px 0;
@@ -519,9 +519,13 @@ footer nav ul {
 	;
 }
 
-#text-dropzone {
+#text-filediv {
 	font-size: 10px;
 	color: #444444;
+}
+
+input[type="file"] {
+	display: none;
 }
 
 .modal-content label {

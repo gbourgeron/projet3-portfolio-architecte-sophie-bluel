@@ -81,13 +81,12 @@
 					<div class="modal-content">
 						<h3>Ajout photo</h3>
 						<form name="project-form" id="project-form" enctype="multipart/form-data">
-							<div id="drop_zone"
-								ondrop="dropHandler(event);"
-								ondragover="dragOverHandler(event);">
-								<img src="assets/icons/picture.png" alt="Logo image" id="picture-dropzone">
-								<button id="add-button-dropzone">+ Ajouter photo</button>
-								<input type="file" name="image">
-								<p id="text-dropzone">jpg, png : 4mo max</p>
+							<div id="filediv">
+								<img src="assets/icons/picture.png" alt="Logo image" id="picture-filediv">
+								
+								<button type="button" id="add-button-filediv">+ Ajouter photo</button>
+								<input type="file" id="file-input" name="image" accept=".jpg, .png">
+								<p id="text-filediv">jpg, png : 4mo max</p>
 							</div>
 
 							<label for="title">Titre</label>

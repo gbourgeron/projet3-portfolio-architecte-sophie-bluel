@@ -389,6 +389,53 @@ projectForm.addEventListener("submit", async function (event) {
         
         console.log("Erreur lors de l'envoi du formulaire : ", error);
     }
-
-
 })
+
+// Input button
+function openFileInput() {
+    document.getElementById("file-input").click();
+}
+
+document.getElementById("add-button-filediv").addEventListener("click", openFileInput);
+
+const fileInput = document.getElementById("file-input");
+fileInput.addEventListener("change", displaySelectedImage);
+
+function displaySelectedImage() {
+    const fileInput = document.getElementById('file-input');
+    const fileDiv = document.getElementById('filediv');
+  
+    // Vérifie si des fichiers ont été sélectionnés
+    if (fileInput.files) {
+        const selectedImage = fileInput.files[0];
+
+        // Créez un objet URL pour la source de l'image
+        const imageURL = URL.createObjectURL(selectedImage);
+
+        // Créez un élément img
+        const imgElement = document.createElement('img');
+        imgElement.src = imageURL;
+
+        // Ajoutez l'élément img à la div parente
+        fileDiv.appendChild(imgElement);
+
+        // Assurez-vous que l'image prend toute la hauteur de la div parente
+        imgElement.style.height = '100%';
+
+        // Masquer tous les éléments à l'intérieur de filediv, sauf l'imgElement
+        hideAllElementsInsideFileDiv(fileDiv, imgElement);
+    }
+  }
+
+  function hideAllElementsInsideFileDiv(parentElement, exceptionElement) {
+    // Récupérez tous les éléments à l'intérieur de filediv
+    const childElements = parentElement.children;
+  
+    // Appliquez la classe hidden à tous les éléments à l'intérieur de filediv, sauf l'exceptionElement
+    for (const child of childElements) {
+      if (child !== exceptionElement) {
+        child.classList.add('hidden');
+      }
+    }
+  }
+
