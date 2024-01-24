@@ -331,6 +331,17 @@ async function deleteWork(workId) {
 //------------------
 //
 //
+// Check form field
+function checkFormField(field) {
+    if(field.value === "") {
+        throw new Error(`Le champ ${field.name} est vide. Veuillez le renseignez.`);
+    }
+}
+
+
+//------------------
+//
+//
 // Create a work
 // Function to add a work
 const projectForm = document.getElementById("project-form");
@@ -341,6 +352,14 @@ projectForm.addEventListener("submit", async function (event) {
     const statutMsg = document.getElementById("statut-msg");
 
     try {
+        let title = document.getElementById("title");
+        checkFormField(title);
+        let category = document.getElementById("category");
+        checkFormField(category);
+        let filediv = document.getElementById("file-input");
+        checkFormField(filediv);
+
+
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
 
@@ -371,24 +390,36 @@ projectForm.addEventListener("submit", async function (event) {
             // Clear form & close modal
             projectForm.reset();
             closeModal();
-        } else {
-            statutMsg.classList.add("error-message");
-            statutMsg.classList.remove("success-message");
-            statutMsg.classList.remove("hidden");
-            statutMsg.textContent = "Échec de l'ajout du projet. Veuillez réessayer.";
+        } 
+        // else {
+            // statutMsg.classList.add("error-message");
+            // statutMsg.classList.remove("success-message");
+            // statutMsg.classList.remove("hidden");
+            // statutMsg.textContent = "Échec de l'ajout du projet. Veuillez réessayer.";
 
-            setTimeout(() => {
-                statutMsg.classList.add("hidden");
-            }, 2000);
-        }
+            // setTimeout(() => {
+            //     statutMsg.classList.add("hidden");
+            // }, 2000);
+        // }
     
-    } catch(error) {
-        
-        
-        console.log("Erreur lors de l'envoi du formulaire : ", error);
+    } catch(error) {  
+
+        statutMsg.classList.add("error-message");
+        statutMsg.classList.remove("success-message");
+        statutMsg.classList.remove("hidden");
+        statutMsg.textContent = `${error.message}`;
+
+        setTimeout(() => {
+        statutMsg.classList.add("hidden");
+        }, 3000);
+        console.log("Erreur lors de l'envoi du formulaire : ", error.message);
     }
 })
 
+
+//------------------
+//
+//
 // Input button
 function openFileInput() {
     document.getElementById("file-input").click();
