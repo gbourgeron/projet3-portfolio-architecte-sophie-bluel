@@ -304,30 +304,26 @@ async function deleteWork(workId) {
             }
         })
 
-        if(response.ok) {
-            // alert(`Projet avec l'ID ${workId} supprimé avec succès.`);
-            deleteMsg.classList.add("success-message");
-            deleteMsg.classList.remove("error-message");
-            deleteMsg.classList.remove("hidden");
-            deleteMsg.textContent = "Projet supprimé avec succès."
+        deleteMsg.classList.add("success-message");
+        deleteMsg.classList.remove("error-message");
+        deleteMsg.classList.remove("hidden");
+        deleteMsg.textContent = "Projet supprimé avec succès."
 
-            setTimeout(() => {
-                deleteMsg.classList.add("hidden");
-            }, 2000);
-        } else {
-            alert(`Échec de la suppression du projet avec l'ID ${workId}`)
-            deleteMsg.classList.add("error-message");
-            deleteMsg.classList.remove("success-message");
-            deleteMsg.classList.remove("hidden");
-            deleteMsg.textContent = "Impossible de supprimer le projet."
-
-            setTimeout(() => {
-                deleteMsg.classList.add("hidden");
-            }, 2000);
-        }
+        setTimeout(() => {
+            deleteMsg.classList.add("hidden");
+        }, 2000);
 
     } catch(error) {
-        alert('Erreur lors de la suppression du projet:', error);
+
+        alert(`Échec de la suppression du projet avec l'ID ${workId}`)
+        deleteMsg.classList.add("error-message");
+        deleteMsg.classList.remove("success-message");
+        deleteMsg.classList.remove("hidden");
+        deleteMsg.textContent = "Impossible de supprimer le projet."
+
+        setTimeout(() => {
+            deleteMsg.classList.add("hidden");
+        }, 2000);
     }
 }
 
