@@ -522,6 +522,10 @@ footer nav ul {
 	cursor: pointer;
 }
 
+#open-modal-2 {
+	width: 237px;
+}
+
 
 /* Modal 2 */
 #modal-2 .icons {
@@ -586,4 +590,9 @@ input[type="file"] {
 	font-weight: 400;
 	border: none;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+}
+
+#validation-btn {
+	background-color: #A7A7A7;
+	width: 237px;
 }
