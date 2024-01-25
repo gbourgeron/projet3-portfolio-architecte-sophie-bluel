@@ -33,20 +33,25 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -54,18 +59,26 @@ table {
 /** end reset css**/
 
 body {
-	max-width: 1140px;
-	margin:auto;
+	max-width: 1440px;
+	margin: auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
+
+.container {
+	max-width: 1140px;
+	margin: auto;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
-	margin: 50px 0
+	margin: 55px 0
 }
 
 h1{
@@ -106,7 +119,12 @@ li:hover {
 }
 
 a {
+	color: black;
 	text-decoration: none;
+}
+
+a:hover {
+	font-weight: bolder;
 }
 
 
@@ -116,6 +134,7 @@ a {
 #introduction {
 	display: flex;
 	align-items: center;
+	margin: 130px 0;
 }
 #introduction figure {
 	flex: 1
@@ -143,7 +162,7 @@ a {
 /*****************************/
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-bottom: 45px;
 }
 
 /* Filters */
@@ -151,7 +170,6 @@ a {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
-	margin-bottom: 2em;
 }
 
 .filter-button {
@@ -169,22 +187,28 @@ a {
 }
 
 .filter-button:hover {
+	cursor: pointer;
 	color: #FFFEF8;
 	background-color: #1D6154;
 }
 
 /* Gallery */
 .gallery {
-	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	width: 100%;
+	margin-top: 45px;
 }
 
 .gallery img {
 	width: 100%;
 
+}
+
+figcaption {
+	margin-top: 7px;
 }
 
 
@@ -209,7 +233,7 @@ a {
 	flex-direction: column;
 }
 
-#contact input {
+#contact input[type="text"], input[type="email"] {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -224,6 +248,7 @@ a {
 }
 
 input[type="submit"]{
+	height: 36px;
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -231,17 +256,28 @@ input[type="submit"]{
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
+	border: none;
 }
 
 
 /******************/
 /*     Footer     */
 /******************/
+footer {
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	height: 60px;
+	margin-top: 20px;
+	width: 100%;
+	background-color: white;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin-right: 100px;
 }
 
 
@@ -255,7 +291,7 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	max-width: 380px;
-	margin: 0 auto;
+	margin: 150px auto;
 	padding: 20px;
 }
 
@@ -305,8 +341,16 @@ footer nav ul {
 #modif-projects {
 	position: absolute;
 	left: calc(50% + 120px);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	/* font-weight: 400; */
 	top: 5px;
 	color: black;
+}
+
+#modif-projects:hover {
+	font-weight: initial;
 }
 
 .headline {
@@ -438,17 +482,17 @@ footer nav ul {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: flex-start;
 	column-gap: 9px;
 	row-gap: 29px;
 	margin-top: 40px;
+	margin-right: auto;
 }
 
 .gallery-modal figure {
 	position: relative;
 	height: 102px;
 	width: 76px;
-	margin-right: auto;
 }
 
 .gallery-modal img {
