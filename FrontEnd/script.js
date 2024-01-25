@@ -338,6 +338,29 @@ function checkFormField(field) {
     }
 }
 
+// A améliorer
+
+// Sélectionnez les champs du formulaire
+const title = document.getElementById("title");
+const category = document.getElementById("category");
+const filediv = document.getElementById("file-input");
+
+// Ajoutez des écouteurs d'événements pour vérifier et mettre à jour le style lors de la saisie
+title.addEventListener("input", updateValidationBtnStyle);
+category.addEventListener("input", updateValidationBtnStyle);
+filediv.addEventListener("input", updateValidationBtnStyle);
+
+// Fonction pour vérifier et mettre à jour le style du bouton de validation
+function updateValidationBtnStyle() {
+    // Vérifiez que tous les champs sont remplis
+    if (title.value !== "" && category.value !== "" && filediv.value !== "") {
+        // Changer le style du bouton de validation
+        const validationBtn = document.getElementById("validation-btn");
+        validationBtn.style.backgroundColor = "#1D6154";
+    }
+}
+
+
 
 //------------------
 //
@@ -359,6 +382,8 @@ projectForm.addEventListener("submit", async function (event) {
         let filediv = document.getElementById("file-input");
         checkFormField(filediv);
 
+        // if (title.value !== "" && category.value !== "" && filediv.value !== "") {
+        // }
 
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
@@ -470,7 +495,7 @@ function displaySelectedImage() {
   }
 
 
-  // Function to reset Modal 2 state
+// Function to reset Modal 2 state
 function resetModal2() {
     // Réinitialiser l'état de la modal 2 à son état d'origine
     const fileInput = document.getElementById('file-input');
@@ -490,6 +515,8 @@ function resetModal2() {
     addButtonFileDiv.classList.remove("hidden");
     textFileDiv.classList.remove("hidden");
 
-    // Effacer le contenu du champ de fichier
+    // Effacer le contenu des champs
     fileInput.value = "";
+    title.value = "";
+    category.value = "";
 }

@@ -584,10 +584,11 @@ input[type="file"] {
 	height: 51px;
 	margin-top: 10px;
 	margin-bottom: 21px;
-	padding: 16px;
+	padding: 10px;
 	font-family: 'Work sans';
 	font-size: 14px;
 	font-weight: 400;
+	color: #444444;
 	border: none;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 }
@@ -595,4 +596,13 @@ input[type="file"] {
 #validation-btn {
 	background-color: #A7A7A7;
 	width: 237px;
+}
+
+input[type="submit"]:hover {
+	cursor: pointer;
+}
+
+select {
+	/* padding-right: 20px; */
+	/* background-color: orange; */
 }
