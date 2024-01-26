@@ -1,21 +1,21 @@
 // API address
 const apiUrl = "http://localhost:5678/api/";
 
-// Récupération des works éventuellement stockés dans le localStorage
+// Get works from localStorage or API
 async function getWorks() {
     let works = window.localStorage.getItem("works");
     
     if (works === null) {
-        // Récupération des works (projets) depuis l'API et le end-point /works
+        // Get works from API/works
         const reponse = await fetch(`${apiUrl}works`);
         works = await reponse.json(); // Nouveau tableau
         
-        // Transformation des pièces en JSON
+        // Transform works in JSON
         const valeurWorks = JSON.stringify(works);
-        // Stockage des informations dans le localStorage
+        // Store works in localStorage
         window.localStorage.setItem("works", valeurWorks);
     } else {
-        works = JSON.parse(works); // Reconstruction des données
+        works = JSON.parse(works); // Rebuilt data
     }
     
     return works
@@ -29,17 +29,17 @@ const divGalleryModal = document.querySelector(".gallery-modal");
 //------------------
 //
 //
-// Create all works for main page
+// Display all works for main page
 function genererWorks(works) {
     
     divGallery.innerHTML = "";
 
-    // Creation d'une boucle pour parcourir et afficher tous les objets de works
+    // For loop for display all works
     for (let i = 0; i < works.length; i++) {
         
-        const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
+        const work = works[i]; // One work
 
-        // Création d'un élément 'image' et 'figCaption'
+        // Create image & figCaption
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         imageElement.alt = work.title;
@@ -47,13 +47,13 @@ function genererWorks(works) {
         const figCaptionElement = document.createElement("figcaption");
         figCaptionElement.innerText = work.title;
         
-        // Création de l'élément 'figure' et rattachement des éléments 'image' et 'figcaption'
+        // Create figure to attach image & figCaption
         const figureElement = document.createElement("figure");
         figureElement.id = `${work.id}-gall`;
         figureElement.appendChild(imageElement);
         figureElement.appendChild(figCaptionElement);
         
-        // Rattachement de l'élément 'figure' au DOM
+        // Attach figure to DOM
         const divGallery = document.querySelector(".gallery");
         divGallery.appendChild(figureElement);
 
@@ -62,6 +62,7 @@ function genererWorks(works) {
 
 // First display of the works
 genererWorks(works);
+
 
 //------------------
 //
@@ -148,30 +149,29 @@ createSelectOptions(categories);
 // Get token
 const token = localStorage.getItem("token");
 
-// Modification des éléments de la page index.html si présence du token
+// Change display of index.html if logged
 if(token) {
-    // Modification du lien 'log-link'
+    // Change login to logout
     const logLink = document.getElementById("log-link");
     logLink.innerText = "logout";    
 
-    // Affichage de la barre "Mode édition"
+    // Display bar "Mode édition"
     const modeEdition = document.getElementById("creation-mode");
     modeEdition.classList.remove("hidden");
     
-    // Affichage d'un lien pour modifier les projets
+    // Display link "modifier"
     const modifProjects = document.getElementById("modif-projects");
     modifProjects.classList.remove("hidden");
     
-    // Masquage des filtres
+    // Hide filters
     const filterBar = document.getElementById("filter-bar");
     filterBar.classList.add("hidden");
-        
     
-    // Déconnexion en cas de click sur log-link
+    // Logout if link clicked
     logLink.addEventListener("click", (event) => {
-        event.preventDefault(); // Empêche la redirection vers login.html
-        localStorage.removeItem("token"); // Retire le token
-        location.reload(); // Recharge la page une fois le token retiré
+        event.preventDefault(); // Prevent redirect to login.html
+        localStorage.removeItem("token"); // Remove token
+        location.reload(); // Reload page
     })
 }
 
@@ -517,5 +517,5 @@ function resetModal2() {
     fileInput.value = "";
     title.value = "";
     category.value = "";
-    
+
 }
