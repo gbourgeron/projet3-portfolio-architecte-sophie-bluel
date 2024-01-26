@@ -177,8 +177,6 @@ if(token) {
 
 
 // MODAL
-
-
 //------------------
 //
 //
@@ -191,7 +189,7 @@ const overlay = document.querySelector(".overlay");
 const backModal1 = document.querySelector("#back");
 
 // Open Modal 1
-const openModal = async function() { // changer en function directement
+async function openModal() {
     modal[0].classList.remove("hidden");
     modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
@@ -200,7 +198,7 @@ const openModal = async function() { // changer en function directement
 
     works = await getWorks();
 
-    // Appel de la fonction pour afficher tous les works
+    // Display all works
     genererThumbnails(works);
 }
 
@@ -232,58 +230,47 @@ overlay.addEventListener("click", closeModal);
 // Create all works for the modal
 function genererThumbnails(works) {
         
-    // Nettoyer la div pour s'assurer qu'il ne reste pas d'anciennes miniatures
     divGalleryModal.innerHTML = "";
 
-    // Creation d'une boucle pour récupérer tous les objets de works
+    // For loop for display all works
     for (let i = 0; i < works.length; i++) {
         
-        const work = works[i]; // Work correspondant à un objet de ma liste works (un projet)
+        const work = works[i]; // One work
 
-        // Création d'un élément 'image'
+        // Create image
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         imageElement.alt = work.title;
 
-        // Création de la trashbin
+        // Create trashbin
         const divTrash = document.createElement("div");
         divTrash.className = "trash";
         const imgTrash = document.createElement("img");
         imgTrash.src = "assets/icons/trashbin.png";
         divTrash.appendChild(imgTrash);
         
-        // Création de l'élément 'figure' et rattachement de l'élément 'imageElement' et 'divTrash'
+        // Create figure to attach image and trashbin
         const figureElement = document.createElement("figure");
         figureElement.id = `${work.id}-thumb`;
         figureElement.appendChild(imageElement);
         figureElement.appendChild(divTrash);
         
-        // Rattachement de l'élément 'figure' au DOM
+        // Attach figure to DOM
         const divGalleryModal = document.querySelector(".gallery-modal");
         divGalleryModal.appendChild(figureElement);
 
-
-        // Ajout d'un listener pour chaque élément .trash
+        // Add eventListener for trashbin click
         divTrash.addEventListener("click", function(event) {
-            event.stopPropagation(); // Empêche la propagation de l'événement pour éviter de déclencher l'événement du parent
+            // Stop event to propagate 
+            event.stopPropagation();
 
-            // Appel de la fonction pour supprimer le projet
+            // Call delete function
             deleteWork(work.id);
-
-            // Retirer l'élément de la modale
-            const deletedWorkModal = document.getElementById(`${work.id}-thumb`);
-            deletedWorkModal.remove();
-
-            // Retirer l'élément de la galerie
-            const deletedWorkGall = document.getElementById(`${work.id}-gall`);
-            deletedWorkGall.remove();
-
-            // Clear localStorage
-            window.localStorage.removeItem("works");
         });
     }
-
 }
+
+
 
 
 //------------------
@@ -304,14 +291,29 @@ async function deleteWork(workId) {
             }
         })
 
-        deleteMsg.classList.add("success-message");
-        deleteMsg.classList.remove("error-message");
-        deleteMsg.classList.remove("hidden");
-        deleteMsg.textContent = "Projet supprimé avec succès."
+        if(response.ok) {
 
-        setTimeout(() => {
-            deleteMsg.classList.add("hidden");
-        }, 3000);
+            deleteMsg.classList.add("success-message");
+            deleteMsg.classList.remove("error-message");
+            deleteMsg.classList.remove("hidden");
+            deleteMsg.textContent = "Projet supprimé avec succès."
+
+            setTimeout(() => {
+                deleteMsg.classList.add("hidden");
+            }, 3000);
+
+            // Remove work from modal
+            const deletedWorkModal = document.getElementById(`${workId}-thumb`);
+            deletedWorkModal.remove();
+
+            // Remove work from gallery
+            const deletedWorkGall = document.getElementById(`${workId}-gall`);
+            deletedWorkGall.remove();
+
+            // Clear localStorage
+            window.localStorage.removeItem("works");
+
+        }
 
     } catch(error) {
 
@@ -323,7 +325,7 @@ async function deleteWork(workId) {
 
         setTimeout(() => {
             deleteMsg.classList.add("hidden");
-        }, 2000);
+        }, 3000);
 
     }
 }
