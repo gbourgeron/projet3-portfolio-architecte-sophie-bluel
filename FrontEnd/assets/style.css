@@ -601,8 +601,3 @@ input[type="file"] {
 input[type="submit"]:hover {
 	cursor: pointer;
 }
-
-select {
-	/* padding-right: 20px; */
-	/* background-color: orange; */
-}

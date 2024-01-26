@@ -311,19 +311,20 @@ async function deleteWork(workId) {
 
         setTimeout(() => {
             deleteMsg.classList.add("hidden");
-        }, 2000);
+        }, 3000);
 
     } catch(error) {
 
-        alert(`Échec de la suppression du projet avec l'ID ${workId}`)
+        // alert(`Échec de la suppression du projet avec l'ID ${workId}`)
         deleteMsg.classList.add("error-message");
         deleteMsg.classList.remove("success-message");
         deleteMsg.classList.remove("hidden");
-        deleteMsg.textContent = "Impossible de supprimer le projet."
+        deleteMsg.textContent = `Impossible de supprimer le projet avec l'ID ${workId}.`;
 
         setTimeout(() => {
             deleteMsg.classList.add("hidden");
         }, 2000);
+
     }
 }
 
@@ -375,6 +376,7 @@ projectForm.addEventListener("submit", async function (event) {
     const statutMsg = document.getElementById("statut-msg");
 
     try {
+
         let title = document.getElementById("title");
         checkFormField(title);
         let category = document.getElementById("category");
@@ -382,9 +384,21 @@ projectForm.addEventListener("submit", async function (event) {
         let filediv = document.getElementById("file-input");
         checkFormField(filediv);
 
-        // if (title.value !== "" && category.value !== "" && filediv.value !== "") {
-        // }
+    } catch(error) {
 
+        statutMsg.classList.add("error-message");
+        statutMsg.classList.remove("success-message");
+        statutMsg.classList.remove("hidden");
+        statutMsg.textContent = `${error.message}`;
+
+        setTimeout(() => {
+        statutMsg.classList.add("hidden");
+        }, 3000);
+
+    }
+
+    try {
+        
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
 
@@ -416,27 +430,8 @@ projectForm.addEventListener("submit", async function (event) {
             projectForm.reset();
             closeModal();
         } 
-        // else {
-            // statutMsg.classList.add("error-message");
-            // statutMsg.classList.remove("success-message");
-            // statutMsg.classList.remove("hidden");
-            // statutMsg.textContent = "Échec de l'ajout du projet. Veuillez réessayer.";
-
-            // setTimeout(() => {
-            //     statutMsg.classList.add("hidden");
-            // }, 2000);
-        // }
-    
-    } catch(error) {  
-
-        statutMsg.classList.add("error-message");
-        statutMsg.classList.remove("success-message");
-        statutMsg.classList.remove("hidden");
-        statutMsg.textContent = `${error.message}`;
-
-        setTimeout(() => {
-        statutMsg.classList.add("hidden");
-        }, 3000);
+            
+    } catch(error) {        
         console.log("Erreur lors de l'envoi du formulaire : ", error.message);
     }
 })
@@ -495,19 +490,22 @@ function displaySelectedImage() {
   }
 
 
-// Function to reset Modal 2 state
+//------------------
+//
+//
+// Function to reset Modal 2
 function resetModal2() {
-    // Réinitialiser l'état de la modal 2 à son état d'origine
+    
     const fileInput = document.getElementById('file-input');
     const fileDiv = document.getElementById('filediv');
     const imgElement = document.getElementById("image-to-upload");
 
-    // Supprimer l'élément img si présent
+    // Delete img if present
     if (imgElement) {
         imgElement.remove();
     }
 
-    // Réinitialiser les styles
+    // Reset class
     const pictureFileDiv = document.getElementById('picture-filediv');
     const addButtonFileDiv = document.getElementById("add-button-filediv");
     const textFileDiv = document.getElementById('text-filediv');
@@ -515,8 +513,9 @@ function resetModal2() {
     addButtonFileDiv.classList.remove("hidden");
     textFileDiv.classList.remove("hidden");
 
-    // Effacer le contenu des champs
+    // Clear field's content
     fileInput.value = "";
     title.value = "";
     category.value = "";
+    
 }
