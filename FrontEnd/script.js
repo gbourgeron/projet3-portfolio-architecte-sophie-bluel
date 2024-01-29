@@ -180,13 +180,24 @@ if(token) {
 //------------------
 //
 //
-// Variable for Modals
+// Variable for Modals and listeners
 const modal = document.querySelectorAll(".modal");
+
 const openModalBtn = document.querySelectorAll(".btn-open");
+openModalBtn[0].addEventListener("click", openModal);
+
 const openModal2Btn = document.querySelector("#open-modal-2");
+openModal2Btn.addEventListener("click", openModal2);
+
 const closeModalBtn = document.querySelectorAll(".btn-close");
+closeModalBtn[0].addEventListener("click", closeModal);
+closeModalBtn[1].addEventListener("click", closeModal);
+
 const overlay = document.querySelector(".overlay");
+overlay.addEventListener("click", closeModal);
+
 const backModal1 = document.querySelector("#back");
+backModal1.addEventListener("click", openModal);
 
 // Open Modal 1
 async function openModal() {
@@ -214,14 +225,6 @@ function closeModal() {
     modal[1].classList.add("hidden");
     overlay.classList.add("hidden");
 }
-
-// Listeners for Modals
-openModalBtn[0].addEventListener("click", openModal);
-openModal2Btn.addEventListener("click", openModal2);
-backModal1.addEventListener("click", openModal);
-closeModalBtn[0].addEventListener("click", closeModal);
-closeModalBtn[1].addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
 
 
 //------------------
@@ -385,16 +388,8 @@ projectForm.addEventListener("submit", async function (event) {
         checkFormField(filediv);
 
     } catch(error) {
-
-        statutMsg.classList.add("error-message");
-        statutMsg.classList.remove("success-message");
-        statutMsg.classList.remove("hidden");
-        statutMsg.textContent = `${error.message}`;
-
-        setTimeout(() => {
-        statutMsg.classList.add("hidden");
-        }, 3000);
-
+        let message = `${error.message}`;
+        displayMessage(statutMsg, message, "error-message");
     }
 
     try {
@@ -417,24 +412,34 @@ projectForm.addEventListener("submit", async function (event) {
             // Wait update of works
             const updatedWorks = await getWorks();
             genererWorks(updatedWorks);
-            
-            statutMsg.classList.add("success-message");
-            statutMsg.classList.remove("error-message");
-            statutMsg.classList.remove("hidden");
-            statutMsg.textContent = "Projet ajouté avec succès.";
 
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            statutMsg.classList.add("hidden");
+            let message = "Projet ajouté avec succès.";
+            await displayMessage(statutMsg, message, "success-message");
 
             // Clear form & close modal
             projectForm.reset();
             closeModal();
         } 
             
-    } catch(error) {        
-        console.log("Erreur lors de l'envoi du formulaire : ", error.message);
+    } catch(error) {       
+        let message = `Erreur du serveur lors de l'envoi du formulaire : ${error.message}`;
+        displayMessage(statutMsg, message, "error-message");
     }
 })
+
+
+//------------------
+//
+//
+// Message function
+async function displayMessage(element, message, className) {
+    element.className = className;
+    element.classList.remove("hidden");
+    element.textContent = message;
+
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    element.classList.add("hidden");
+}
 
 
 //------------------
