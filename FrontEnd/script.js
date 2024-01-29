@@ -293,15 +293,8 @@ async function deleteWork(workId) {
         })
 
         if(response.ok) {
-
-            deleteMsg.classList.add("success-message");
-            deleteMsg.classList.remove("error-message");
-            deleteMsg.classList.remove("hidden");
-            deleteMsg.textContent = "Projet supprimé avec succès."
-
-            setTimeout(() => {
-                deleteMsg.classList.add("hidden");
-            }, 3000);
+            let message = "Projet supprimé avec succès.";
+            displayMessage(deleteMsg, message, "success-message");
 
             // Remove work from modal
             const deletedWorkModal = document.getElementById(`${workId}-thumb`);
@@ -313,21 +306,11 @@ async function deleteWork(workId) {
 
             // Clear localStorage
             window.localStorage.removeItem("works");
-
         }
 
     } catch(error) {
-
-        // alert(`Échec de la suppression du projet avec l'ID ${workId}`)
-        deleteMsg.classList.add("error-message");
-        deleteMsg.classList.remove("success-message");
-        deleteMsg.classList.remove("hidden");
-        deleteMsg.textContent = `Impossible de supprimer le projet avec l'ID ${workId}.`;
-
-        setTimeout(() => {
-            deleteMsg.classList.add("hidden");
-        }, 3000);
-
+        let message = `Impossible de supprimer le projet : ${error.message}`;
+        displayMessage(deleteMsg, message, "error-message");
     }
 }
 
