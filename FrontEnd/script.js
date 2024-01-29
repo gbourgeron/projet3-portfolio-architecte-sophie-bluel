@@ -184,7 +184,7 @@ if(token) {
 const modal = document.querySelectorAll(".modal");
 
 const openModalBtn = document.querySelectorAll(".btn-open");
-openModalBtn[0].addEventListener("click", openModal);
+openModalBtn[0].addEventListener("click", openModal1);
 
 const openModal2Btn = document.querySelector("#open-modal-2");
 openModal2Btn.addEventListener("click", openModal2);
@@ -197,10 +197,10 @@ const overlay = document.querySelector(".overlay");
 overlay.addEventListener("click", closeModal);
 
 const backModal1 = document.querySelector("#back");
-backModal1.addEventListener("click", openModal);
+backModal1.addEventListener("click", openModal1);
 
 // Open Modal 1
-async function openModal() {
+async function openModal1() {
     modal[0].classList.remove("hidden");
     modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
@@ -284,7 +284,6 @@ async function deleteWork(workId) {
     const deleteMsg = document.getElementById("delete-msg");
 
     try {
-        const token = localStorage.getItem("token");
         const response = await fetch(`${apiUrl}works/${workId}`, {
             method: "DELETE",
             headers: {
@@ -327,17 +326,17 @@ function checkFormField(field) {
 
 // A améliorer
 
-// Sélectionnez les champs du formulaire
+// Select form field an check if selected to change Submit button style
 const title = document.getElementById("title");
-const category = document.getElementById("category");
-const filediv = document.getElementById("file-input");
-
-// Ajoutez des écouteurs d'événements pour vérifier et mettre à jour le style lors de la saisie
 title.addEventListener("input", updateValidationBtnStyle);
+
+const category = document.getElementById("category");
 category.addEventListener("input", updateValidationBtnStyle);
+
+const filediv = document.getElementById("file-input");
 filediv.addEventListener("input", updateValidationBtnStyle);
 
-// Fonction pour vérifier et mettre à jour le style du bouton de validation
+// Check form and change submit button style
 function updateValidationBtnStyle() {
     // Vérifiez que tous les champs sont remplis
     if (title.value !== "" && category.value !== "" && filediv.value !== "") {
@@ -346,7 +345,6 @@ function updateValidationBtnStyle() {
         validationBtn.style.backgroundColor = "#1D6154";
     }
 }
-
 
 
 //------------------
