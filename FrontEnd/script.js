@@ -271,8 +271,6 @@ function genererThumbnails(works) {
 }
 
 
-
-
 //------------------
 //
 //
@@ -425,7 +423,7 @@ projectForm.addEventListener("submit", async function (event) {
             statutMsg.classList.remove("hidden");
             statutMsg.textContent = "Projet ajouté avec succès.";
 
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 3000));
             statutMsg.classList.add("hidden");
 
             // Clear form & close modal
@@ -452,44 +450,45 @@ document.getElementById("add-button-filediv").addEventListener("click", openFile
 const fileInput = document.getElementById("file-input");
 fileInput.addEventListener("change", displaySelectedImage);
 
+// Display uploaded image
 function displaySelectedImage() {
     const fileInput = document.getElementById('file-input');
     const fileDiv = document.getElementById('filediv');
   
-    // Vérifie si des fichiers ont été sélectionnés
+    // Check if file selected
     if (fileInput.files) {
         const selectedImage = fileInput.files[0];
 
-        // Créez un objet URL pour la source de l'image
+        // Create URL object for the selected image
         const imageURL = URL.createObjectURL(selectedImage);
 
-        // Créez un élément img
+        // Create image element
         const imgElement = document.createElement('img');
         imgElement.src = imageURL;
         imgElement.id = "image-to-upload"
 
-        // Ajoutez l'élément img à la div parente
+        // Add image to parent div
         fileDiv.appendChild(imgElement);
 
-        // Assurez-vous que l'image prend toute la hauteur de la div parente
+        // Change height of the image
         imgElement.style.height = '100%';
 
-        // Masquer tous les éléments à l'intérieur de filediv, sauf l'imgElement
-        hideAllElementsInsideFileDiv(fileDiv, imgElement);
+        // Hide all elements behind image
+        hideAllElementsBehindImage(fileDiv, imgElement);
     }
-  }
+}
 
-  function hideAllElementsInsideFileDiv(parentElement, exceptionElement) {
-    // Récupérez tous les éléments à l'intérieur de filediv
+function hideAllElementsBehindImage(parentElement, exceptionElement) {
+    // Get all elements from parentElement
     const childElements = parentElement.children;
   
-    // Appliquez la classe hidden à tous les éléments à l'intérieur de filediv, sauf l'exceptionElement
+    // Apply hidden class for all childElements with an except one
     for (const child of childElements) {
       if (child !== exceptionElement) {
         child.classList.add('hidden');
       }
     }
-  }
+}
 
 
 //------------------
