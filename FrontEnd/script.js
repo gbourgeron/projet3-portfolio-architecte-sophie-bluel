@@ -431,7 +431,8 @@ function openFileInput() {
     document.getElementById("file-input").click();
 }
 
-document.getElementById("add-button-filediv").addEventListener("click", openFileInput);
+const addButton = document.getElementById("add-button-filediv");
+addButton.addEventListener("click", openFileInput);
 
 const fileInput = document.getElementById("file-input");
 fileInput.addEventListener("change", displaySelectedImage);

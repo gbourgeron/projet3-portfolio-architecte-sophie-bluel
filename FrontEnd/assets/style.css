@@ -34,10 +34,6 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-body {
-	line-height: 1;
-}
-
 ol, ul {
 	list-style: none;
 }
@@ -59,6 +55,7 @@ table {
 /** end reset css**/
 
 body {
+	line-height: 1;
 	max-width: 1440px;
 	margin: auto;
 	font-family: 'Work Sans' ;
@@ -68,6 +65,7 @@ body {
 
 .container {
 	max-width: 1140px;
+	min-height: 100vh;
 	margin: auto;
 }
 
