@@ -321,29 +321,26 @@ async function deleteWork(workId) {
 function checkFormField(field) {
     if(field.value === "") {
         throw new Error(`Le champ ${field.name} est vide. Veuillez le renseignez.`);
-    }
+    }   
 }
 
-// A améliorer
 
-// Select form field an check if selected to change Submit button style
+// Select form field and check if filled to change Submit button style
 const title = document.getElementById("title");
 title.addEventListener("input", updateValidationBtnStyle);
-
 const category = document.getElementById("category");
 category.addEventListener("input", updateValidationBtnStyle);
-
 const filediv = document.getElementById("file-input");
 filediv.addEventListener("input", updateValidationBtnStyle);
+const validationBtn = document.getElementById("validation-btn");
 
 // Check form and change submit button style
 function updateValidationBtnStyle() {
     // Vérifiez que tous les champs sont remplis
     if (title.value !== "" && category.value !== "" && filediv.value !== "") {
         // Changer le style du bouton de validation
-        const validationBtn = document.getElementById("validation-btn");
         validationBtn.style.backgroundColor = "#1D6154";
-    }
+    }   
 }
 
 
@@ -359,22 +356,22 @@ projectForm.addEventListener("submit", async function (event) {
 
     const statutMsg = document.getElementById("statut-msg");
 
+    // Checking form 
     try {
-
-        let title = document.getElementById("title");
         checkFormField(title);
-        let category = document.getElementById("category");
         checkFormField(category);
-        let filediv = document.getElementById("file-input");
         checkFormField(filediv);
-
     } catch(error) {
         let message = `${error.message}`;
         displayMessage(statutMsg, message, "error-message");
     }
 
+    // Send form data
     try {
-        
+        validationBtn.disabled = true;
+        validationBtn.style.backgroundColor = "";
+        validationBtn.style.cursor = "not-allowed";
+
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
 
@@ -500,6 +497,9 @@ function resetModal2() {
     pictureFileDiv.classList.remove('hidden');
     addButtonFileDiv.classList.remove("hidden");
     textFileDiv.classList.remove("hidden");
+    const validationBtn = document.getElementById("validation-btn");
+    validationBtn.style.backgroundColor = "";
+    validationBtn.style.cursor = "";
 
     // Clear field's content
     fileInput.value = "";
