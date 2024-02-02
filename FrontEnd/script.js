@@ -340,6 +340,7 @@ function updateValidationBtnStyle() {
     if (title.value !== "" && category.value !== "" && filediv.value !== "") {
         // Changer le style du bouton de validation
         validationBtn.style.backgroundColor = "#1D6154";
+        validationBtn.style.cursor = "pointer";
     }   
 }
 
@@ -368,10 +369,6 @@ projectForm.addEventListener("submit", async function (event) {
 
     // Send form data
     try {
-        validationBtn.disabled = true;
-        validationBtn.style.backgroundColor = "";
-        validationBtn.style.cursor = "not-allowed";
-
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
 
@@ -430,14 +427,12 @@ function openFileInput() {
 
 const addButton = document.getElementById("add-button-filediv");
 addButton.addEventListener("click", openFileInput);
-
 const fileInput = document.getElementById("file-input");
 fileInput.addEventListener("change", displaySelectedImage);
+const fileDiv = document.getElementById('filediv');
 
 // Display uploaded image
 function displaySelectedImage() {
-    const fileInput = document.getElementById('file-input');
-    const fileDiv = document.getElementById('filediv');
   
     // Check if file selected
     if (fileInput.files) {
@@ -480,9 +475,6 @@ function hideAllElementsBehindImage(parentElement, exceptionElement) {
 //
 // Function to reset Modal 2
 function resetModal2() {
-    
-    const fileInput = document.getElementById('file-input');
-    const fileDiv = document.getElementById('filediv');
     const imgElement = document.getElementById("image-to-upload");
 
     // Delete img if present
@@ -497,9 +489,6 @@ function resetModal2() {
     pictureFileDiv.classList.remove('hidden');
     addButtonFileDiv.classList.remove("hidden");
     textFileDiv.classList.remove("hidden");
-    const validationBtn = document.getElementById("validation-btn");
-    validationBtn.style.backgroundColor = "";
-    validationBtn.style.cursor = "";
 
     // Clear field's content
     fileInput.value = "";
