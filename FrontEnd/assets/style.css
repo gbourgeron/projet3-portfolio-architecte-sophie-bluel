@@ -570,6 +570,10 @@ footer nav ul {
 	;
 }
 
+#add-button-filediv:hover {
+	cursor: pointer;
+}
+
 #text-filediv {
 	font-size: 10px;
 	color: #444444;
