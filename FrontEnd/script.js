@@ -9,51 +9,35 @@ async function getWorks() {
 }
 
 let works = await getWorks();
-
 const divGallery = document.querySelector(".gallery");
 const divGalleryModal = document.querySelector(".gallery-modal");
 
-//------------------
-//
-//
 // Display all works for main page
 function genererWorks(works) {
-    
     divGallery.innerHTML = "";
-
     // For loop for display all works
     for (let i = 0; i < works.length; i++) {
-        
         const work = works[i]; // One work
-
         // Create image & figCaption
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         imageElement.alt = work.title;
-        
         const figCaptionElement = document.createElement("figcaption");
         figCaptionElement.innerText = work.title;
-        
         // Create figure to attach image & figCaption
         const figureElement = document.createElement("figure");
         figureElement.id = `${work.id}-gall`;
         figureElement.appendChild(imageElement);
         figureElement.appendChild(figCaptionElement);
-        
         // Attach figure to DOM
         const divGallery = document.querySelector(".gallery");
         divGallery.appendChild(figureElement);
-
     }
 }
 
 // First display of the works
 genererWorks(works);
 
-
-//------------------
-//
-//
 // Get categories
 async function getCategories() {
     try {
@@ -64,29 +48,21 @@ async function getCategories() {
         return [];
     }
 }
-
 const categories = await getCategories();
 
-
-//------------------
-//
-//
 // Create filters V2
 function createFilterButtons(categories) {
     const filterBar = document.getElementById("filter-bar");
-
     // Create a button for all works
     const allFilterButton = document.createElement("button");
     allFilterButton.className = "filter-button";
     allFilterButton.id = "all-filter-btn";
     allFilterButton.innerText = "Tous";
-
     allFilterButton.addEventListener("click", () => {
         // Clear all previous works filtered
         document.querySelector(".gallery").innerHTML = "";
         genererWorks(works);
     });
-
     filterBar.appendChild(allFilterButton);
 
     // Create a button for each category
@@ -95,61 +71,43 @@ function createFilterButtons(categories) {
         filterButton.className = "filter-button";
         filterButton.id = `filter-btn-${category.id}`;
         filterButton.innerText = category.name;
-
         filterButton.addEventListener("click", () => {
             const filteredWorks = works.filter(work => work.category.id === category.id);
             genererWorks(filteredWorks);
         })
-
         // Add each button to the filter bar
         filterBar.appendChild(filterButton);
     })
 
 }
-
 createFilterButtons(categories);
 
-
-//------------------
-//
-//
 // Select options
 function createSelectOptions(categories) {
     const selectMenu = document.getElementById("category");
-
     // Create an option for each category
     categories.forEach(category => {
         const option = document.createElement("option");
         option.value = category.id;
         option.innerText = category.name;
-
         selectMenu.appendChild(option);
     })
 }
-
 createSelectOptions(categories);
 
-
-//------------------
-//
-//
 // Get token
 const token = localStorage.getItem("token");
-
 // Change display of index.html if logged
 if(token) {
     // Change login to logout
     const logLink = document.getElementById("log-link");
     logLink.innerText = "logout";    
-
     // Display bar "Mode édition"
     const modeEdition = document.getElementById("creation-mode");
     modeEdition.classList.remove("hidden");
-    
     // Display link "modifier"
     const modifProjects = document.getElementById("modif-projects");
     modifProjects.classList.remove("hidden");
-    
     // Hide filters
     const filterBar = document.getElementById("filter-bar");
     filterBar.classList.add("hidden");
@@ -162,27 +120,17 @@ if(token) {
     })
 }
 
-
-// MODAL
-//------------------
-//
-//
-// Variable for Modals and listeners
+// Variables for Modals and listeners
 const modal = document.querySelectorAll(".modal");
-
 const openModalBtn = document.querySelectorAll(".btn-open");
 openModalBtn[0].addEventListener("click", openModal1);
-
 const openModal2Btn = document.querySelector("#open-modal-2");
 openModal2Btn.addEventListener("click", openModal2);
-
 const closeModalBtn = document.querySelectorAll(".btn-close");
 closeModalBtn[0].addEventListener("click", closeModal);
 closeModalBtn[1].addEventListener("click", closeModal);
-
 const overlay = document.querySelector(".overlay");
 overlay.addEventListener("click", closeModal);
-
 const backModal1 = document.querySelector("#back");
 backModal1.addEventListener("click", openModal1);
 
@@ -191,11 +139,8 @@ async function openModal1() {
     modal[0].classList.remove("hidden");
     modal[1].classList.add("hidden");
     overlay.classList.remove("hidden");
-
     resetModal2();
-
     works = await getWorks();
-
     // Display all works
     genererThumbnails(works);
 }
@@ -213,38 +158,27 @@ function closeModal() {
     overlay.classList.add("hidden");
 }
 
-
-//------------------
-//
-//
 // Create all works for the modal
 function genererThumbnails(works) {
-        
     divGalleryModal.innerHTML = "";
-
     // For loop for display all works
     for (let i = 0; i < works.length; i++) {
-        
         const work = works[i]; // One work
-
         // Create image
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         imageElement.alt = work.title;
-
         // Create trashbin
         const divTrash = document.createElement("div");
         divTrash.className = "trash";
         const imgTrash = document.createElement("img");
         imgTrash.src = "assets/icons/trashbin.png";
         divTrash.appendChild(imgTrash);
-        
         // Create figure to attach image and trashbin
         const figureElement = document.createElement("figure");
         figureElement.id = `${work.id}-thumb`;
         figureElement.appendChild(imageElement);
         figureElement.appendChild(divTrash);
-        
         // Attach figure to DOM
         const divGalleryModal = document.querySelector(".gallery-modal");
         divGalleryModal.appendChild(figureElement);
@@ -253,23 +187,16 @@ function genererThumbnails(works) {
         divTrash.addEventListener("click", function(event) {
             // Stop event to propagate 
             event.stopPropagation();
-
             // Call delete function
             deleteWork(work.id);
         });
     }
 }
 
-
-//------------------
-//
-//
 // Delete a work
 // Function to delete a work with his ID
 async function deleteWork(workId) {
-
     const deleteMsg = document.getElementById("delete-msg");
-
     try {
         const response = await fetch(`${apiUrl}works/${workId}`, {
             method: "DELETE",
@@ -277,37 +204,28 @@ async function deleteWork(workId) {
                 "Authorization": `Bearer ${token}`
             }
         })
-
         if(response.ok) {
             let message = "Projet supprimé avec succès.";
             displayMessage(deleteMsg, message, "success-message");
-
             // Remove work from modal
             const deletedWorkModal = document.getElementById(`${workId}-thumb`);
             deletedWorkModal.remove();
-
             // Remove work from gallery
             const deletedWorkGall = document.getElementById(`${workId}-gall`);
             deletedWorkGall.remove();
         }
-
     } catch(error) {
         let message = `Impossible de supprimer le projet : ${error.message}`;
         displayMessage(deleteMsg, message, "error-message");
     }
 }
 
-
-//------------------
-//
-//
 // Check form field
 function checkFormField(field) {
     if(field.value === "") {
         throw new Error(`Le champ ${field.name} est vide. Veuillez le renseignez.`);
     }   
 }
-
 
 // Select form field and check if filled to change Submit button style
 const title = document.getElementById("title");
@@ -327,19 +245,13 @@ function updateValidationBtnStyle() {
     }   
 }
 
-
-//------------------
-//
-//
 // Create a work
 // Function to add a work
 const projectForm = document.getElementById("project-form");
 projectForm.addEventListener("submit", async function (event) {
     // Prevent reload page after submit form
     event.preventDefault();
-
     const statutMsg = document.getElementById("statut-msg");
-
     // Checking form 
     try {
         checkFormField(title);
@@ -349,12 +261,10 @@ projectForm.addEventListener("submit", async function (event) {
         let message = `${error.message}`;
         displayMessage(statutMsg, message, "error-message");
     }
-
     // Send form data
     try {
         const formData = new FormData(this);
         const token = localStorage.getItem("token");
-
         const response = await fetch (`${apiUrl}works`, {
             method: 'POST',
             headers: {
@@ -362,44 +272,31 @@ projectForm.addEventListener("submit", async function (event) {
             },
             body: formData
         });
-
         if(response.ok) {
             // Wait update of works
             const updatedWorks = await getWorks();
             genererWorks(updatedWorks);
-
             let message = "Projet ajouté avec succès.";
             await displayMessage(statutMsg, message, "success-message");
-
             // Clear form & close modal
             projectForm.reset();
             closeModal();
         } 
-            
     } catch(error) {       
         let message = `Erreur du serveur lors de l'envoi du formulaire : ${error.message}`;
         displayMessage(statutMsg, message, "error-message");
     }
 })
 
-
-//------------------
-//
-//
 // Message function
 async function displayMessage(element, message, className) {
     element.className = className;
     element.classList.remove("hidden");
     element.textContent = message;
-
     await new Promise(resolve => setTimeout(resolve, 3000));
     element.classList.add("hidden");
 }
 
-
-//------------------
-//
-//
 // Input button
 function openFileInput() {
     document.getElementById("file-input").click();
@@ -413,25 +310,19 @@ const fileDiv = document.getElementById('filediv');
 
 // Display uploaded image
 function displaySelectedImage() {
-  
     // Check if file selected
     if (fileInput.files) {
         const selectedImage = fileInput.files[0];
-
         // Create URL object for the selected image
         const imageURL = URL.createObjectURL(selectedImage);
-
         // Create image element
         const imgElement = document.createElement('img');
         imgElement.src = imageURL;
         imgElement.id = "image-to-upload"
-
         // Add image to parent div
         fileDiv.appendChild(imgElement);
-
         // Change height of the image
         imgElement.style.height = '100%';
-
         // Hide all elements behind image
         hideAllElementsBehindImage(fileDiv, imgElement);
     }
@@ -440,7 +331,6 @@ function displaySelectedImage() {
 function hideAllElementsBehindImage(parentElement, exceptionElement) {
     // Get all elements from parentElement
     const childElements = parentElement.children;
-  
     // Apply hidden class for all childElements with an except one
     for (const child of childElements) {
       if (child !== exceptionElement) {
@@ -449,19 +339,13 @@ function hideAllElementsBehindImage(parentElement, exceptionElement) {
     }
 }
 
-
-//------------------
-//
-//
 // Function to reset Modal 2
 function resetModal2() {
     const imgElement = document.getElementById("image-to-upload");
-
     // Delete img if present
     if (imgElement) {
         imgElement.remove();
     }
-
     // Reset class
     const pictureFileDiv = document.getElementById('picture-filediv');
     const addButtonFileDiv = document.getElementById("add-button-filediv");
@@ -469,11 +353,9 @@ function resetModal2() {
     pictureFileDiv.classList.remove('hidden');
     addButtonFileDiv.classList.remove("hidden");
     textFileDiv.classList.remove("hidden");
-
     // Clear field's content
     fileInput.value = "";
     title.value = "";
     category.value = "";
-
     validationBtn.style.backgroundColor = "";
 }
