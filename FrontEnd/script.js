@@ -488,5 +488,11 @@ function resetModal2() {
     pictureFileDiv.classList.remove('hidden');
     addButtonFileDiv.classList.remove("hidden");
     textFileDiv.classList.remove("hidden");
+
+    // Clear field's content
+    fileInput.value = "";
+    title.value = "";
+    category.value = "";
+
     validationBtn.style.backgroundColor = "";
 }
