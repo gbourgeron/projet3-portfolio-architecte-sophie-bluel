@@ -3,21 +3,8 @@ const apiUrl = "http://localhost:5678/api/";
 
 // Get works from localStorage or API
 async function getWorks() {
-    let works = window.localStorage.getItem("works");
-    
-    if (works === null) {
-        // Get works from API/works
-        const reponse = await fetch(`${apiUrl}works`);
-        works = await reponse.json(); // Nouveau tableau
-        
-        // Transform works in JSON
-        const valeurWorks = JSON.stringify(works);
-        // Store works in localStorage
-        window.localStorage.setItem("works", valeurWorks);
-    } else {
-        works = JSON.parse(works); // Rebuilt data
-    }
-    
+    const reponse = await fetch(`${apiUrl}works`);
+    let works = await reponse.json(); // Nouveau tableau
     return works
 }
 
@@ -302,9 +289,6 @@ async function deleteWork(workId) {
             // Remove work from gallery
             const deletedWorkGall = document.getElementById(`${workId}-gall`);
             deletedWorkGall.remove();
-
-            // Clear localStorage
-            window.localStorage.removeItem("works");
         }
 
     } catch(error) {
@@ -380,9 +364,6 @@ projectForm.addEventListener("submit", async function (event) {
         });
 
         if(response.ok) {
-            // Clear localStorage
-            window.localStorage.removeItem("works");
-
             // Wait update of works
             const updatedWorks = await getWorks();
             genererWorks(updatedWorks);
